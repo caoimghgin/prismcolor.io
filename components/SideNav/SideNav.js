@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useMantineColorScheme, Select } from '@mantine/core';
+import { useMantineColorScheme, Select, Space } from '@mantine/core';
 
 import styled from "styled-components";
 
@@ -7,23 +7,38 @@ export default function SideNav(props) {
     const { setColorScheme } = useMantineColorScheme();
 
     const [selectedSwatchDisplayOption, setSelectedSwatchDisplayOption] = useState(swatchDisplayOptions[1]);
+    const [optimizationValue, setOptimizationValue] = useState("Universal");
+    const [contrastValue, setContrastValue] = useState("WCAG21");
 
     const onSelectSwatchDisplayChangeHandler = async (event) => {
         setSelectedSwatchDisplayOption(event)
         props.setDelegate({ ...props.delegate, displayValue: event.value })
     }
 
-    const onChangeHandler = (foo) => {
-        console.log("onChangeHandler:", foo)
+    const onChangeContrastHandler = (selection) => {
+        setContrastValue(selection)
+    }
+
+    const onChangeOptimizationHandler = (selection) => {
+        setOptimizationValue(selection)
     }
 
     return (
         <Container>
         <Select
+          label = "Optimization"
+          value = {optimizationValue}
+          data = {["Universal", "Material Design", "IBM Carbon", "Salesforce Lightning", "Adobe Spectrum", "Ant Design", "Accessible Palette", "ColorBox", "Genome" ]}
+          onChange={onChangeOptimizationHandler}
+        />
+              <Space h="md" />
+
+                <Select
           label = "Swatch Contrast Tag"
+          value = {contrastValue}
           placeholder = "Pick Swatch Contrast"
-          data = {['None', 'CIE L* (d65)', 'APCA', 'WCAG21']}
-          onChange={onChangeHandler}
+          data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
+          onChange={onChangeContrastHandler}
         />
         </Container>
       );

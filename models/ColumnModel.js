@@ -30,7 +30,9 @@ export default class ColumnModel {
                 const swatchModel = new SwatchModel({
                     color: color,
                     destinationSpace: this.destinationSpace,
-                    priority: (values.length - index)
+                    priority: (values.length - index),
+                    isKey: index === 0 ? false : true,
+                    isAnchor: index === 0 ? true : false
                 })
                 this.swatches[swatchModel.index] = swatchModel
             });
@@ -51,11 +53,11 @@ export default class ColumnModel {
         const targetsLength = targets.length - 1
         if (this.swatches[0] === null) {
             const color = new ColorModel("White");
-            this.swatches[0] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace })
+            this.swatches[0] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isAnchor: true })
         }
         if (this.swatches[targetsLength] === null) {
             const color = new ColorModel("Black");
-            this.swatches[targetsLength] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace })
+            this.swatches[targetsLength] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isAnchor: true })
         }
     }
 
@@ -78,24 +80,17 @@ export default class ColumnModel {
                 let target = targets[idx]
 
                 /*
-                target = target !== 50 ? target : target - 0.50;
-                target = target !== 60 ? target : target + 1.00;
-                target = target !== 80 ? target : target - 0.50;
-
-                target = target !== 70 ? target : target - 1.50;
-                // target = target !== 97.5 ? target : target - 0.75;
-                // target = target !== 95.0 ? target : target - 1.00;
-
-                target = target !== 90.0 ? target : target - 0.50;
-                target = target !== 5.0 ? target : target + 0.25;
+                * L* 50 needs to tweak slightly lighter to reliably pass WCAG 4.5:1
+                * This difference is not visually noticable.
                 */
+                target = target === 50 ? target - 0.25 : target;
 
                 const color = candidateSwatches.reduce(function (prev, curr) {
                     return Math.abs(curr.lab_d65.l - target) < Math.abs(prev.lab_d65.l - target)
                         ? curr
                         : prev;
                 });
-                this.swatches[idx] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace })
+                this.swatches[idx] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isKey: false })
 
             }
         });
