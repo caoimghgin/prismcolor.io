@@ -72,6 +72,7 @@ font-size: 9px;
 font-weight: 600;
 font-family: "Helvetica";
   text-align: right;
+  letter-spacing: .05rem;
 padding-right: 8px;
 padding-top: 4px;
 
