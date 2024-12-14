@@ -91,10 +91,10 @@ export default class ColumnModel {
                         : prev;
                 });
                 this.swatches[idx] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isKey: false })
-
             }
         });
 
         candidateSwatches.length = 0
     }
+
 }

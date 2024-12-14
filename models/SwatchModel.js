@@ -8,7 +8,7 @@ export default class SwatchModel {
 
         const { color, destinationSpace, priority, isKey, isAnchor } = args
 
-        this.color = color;
+        this.color = this.normalizeColorToDestinationGamut(color, destinationSpace);
         this.value = { origin: color.to(color.space.id).toString(), destination: color.to(destinationSpace).toString(), hex: color.as("hex") }
         this.weight = luminanceToWeight(color.lab.l)
         this.index = weights.findIndex(item => item === this.weight);
@@ -21,6 +21,14 @@ export default class SwatchModel {
         this.apca_black = color.contrast(new Color("Black"), "APCA")
         this.lab_d65_l = color.lab_d65.l
         this.hex = color.as("hex")
+    }
+
+    normalizeColorToDestinationGamut(color, destinationSpace) {
+        if (destinationSpace === "srgb" && !color.inGamut(destinationSpace)) {
+            const result = color.toGamut({space: "srgb"});
+            return result
+        }
+        return color
     }
 
 }

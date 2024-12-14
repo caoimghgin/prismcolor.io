@@ -57,8 +57,9 @@ const contrastLabel = (model) => {
 }
 
 const getIcon = (model) => {
-    if (model.isKey) return (<Key/>)
-    if (model.isAnchor) return (<Anchor/>)
+    const size = 24
+    if (model.isKey) return (<Key size={size}/>)
+    if (model.isAnchor) return (<Anchor size={size}/>)
 }
 
 const Wrapper = styled.div`
@@ -80,11 +81,11 @@ margin: 0px 16px 8px 0px;
 `;
 
 const TopSection = styled.div`
+height: 20px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 width: 72px;
-height: 12px;
 font-size: 9px;
 font-weight: 600;
 font-family: "Helvetica";
@@ -112,10 +113,12 @@ padding-top: 1.5px;
 
 const MiddleSection = styled.div`
 width: 72px;
-height: 39px;
+height: 36px;
 display: flex;
 justify-content: center;
 align-items: center;
+margin-top: -5px;
+
 // border: ${props => props.model.lab_d65_l > 90 ? "1px solid #E2E2E2" : "1px solid #E2E2E2"};
 `;
 
