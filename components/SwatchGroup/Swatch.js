@@ -77,7 +77,7 @@ background: ${props => props.model.value.destination};
 color: ${props => props.model.lab_d65_l < 50 ? "white" : "black"};
 border-radius: 8px;
 margin: 0px 16px 8px 0px;
-// border: ${props => props.model.lab_d65_l > 90 ? "1px solid #E2E2E2" : null};
+border: ${props => props.model.lab_d65_l > 90 ? "1px solid #E2E2E2" : null};
 `;
 
 const TopSection = styled.div`
