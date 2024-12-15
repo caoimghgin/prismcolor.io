@@ -8,6 +8,7 @@ export default function SwatchView(props) {
 
     useEffect(() => {
         if (!props.model || !props.delegate) return
+        console.log("delegate:", props.delegate)
         setModel({ ...props.model, delegate: props.delegate })
     }, [props.model, props.delegate])
 

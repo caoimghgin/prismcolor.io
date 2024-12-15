@@ -5,7 +5,7 @@ import SideNav from "../components/SideNav/SideNav"
 import styled from "styled-components";
 
 export default function Create() {
-    const [appDelegate, setAppDelegate] = useState({ displayContrast: "wcag21", displayValue: "ciel*d65" });
+    const [appDelegate, setAppDelegate] = useState({ optimization: "Universal", contrast: "WCAG21" });
     const [data, setData] = useState<SemanticPaletteScale[]>();
     const [model, setModel] = useState<any>();
 
@@ -38,7 +38,7 @@ const render = (model: any, delegate: any, setDelegate: any) => {
             <NavBar />
             <Container>
                 <Left>
-                    <SideNav />
+                    <SideNav delegate={delegate} setDelegate={setDelegate}/>
                 </Left>
                 <Main>
                     <PaletteViewStyle>

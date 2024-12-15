@@ -10,17 +10,14 @@ export default function SideNav(props) {
     const [optimizationValue, setOptimizationValue] = useState("Universal");
     const [contrastValue, setContrastValue] = useState("WCAG21");
 
-    const onSelectSwatchDisplayChangeHandler = async (event) => {
-        setSelectedSwatchDisplayOption(event)
-        props.setDelegate({ ...props.delegate, displayValue: event.value })
-    }
-
     const onChangeContrastHandler = (selection) => {
         setContrastValue(selection)
+        props.setDelegate({...props.delegate, contrast: selection})
     }
 
     const onChangeOptimizationHandler = (selection) => {
         setOptimizationValue(selection)
+        props.setDelegate({...props.delegate, optimization: selection})
     }
 
     return (
@@ -32,7 +29,6 @@ export default function SideNav(props) {
           onChange={onChangeOptimizationHandler}
         />
               <Space h="md" />
-
                 <Select
           label = "Swatch Contrast Tag"
           value = {contrastValue}
