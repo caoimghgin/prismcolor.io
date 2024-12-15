@@ -27,14 +27,29 @@ const render = (model, delegate, onClickHandler) => {
         {model.weight}    
         <Swatch model={model} delegate={delegate} onClick={onClickHandler}>
             <TopSection model={model}>
-                <TopSectionLeft model={model}>{model.color.inGamut("srgb") ? null : <AlertTriangle size={14}/>}</TopSectionLeft>
+                <TopSectionLeft model={model}>{getSymbols(model)}</TopSectionLeft>
                 <TopSectionMiddle model={model}></TopSectionMiddle>
                 <TopSectionRight model={model}>{model.weight}</TopSectionRight>
             </TopSection>
-            <MiddleSection model={model}>{getIcon(model)}</MiddleSection>
-            <BottomSection model={model}>{contrastLabel(model, delegate)}</BottomSection>
+            <MiddleSection model={model}></MiddleSection>
+            <BottomSection model={model}>
+                {contrastLabel(model, delegate)}
+            </BottomSection>
         </Swatch>
     </Wrapper>
+}
+
+const getSymbols = (model) => {
+    const size = 14
+
+    if (!model.color.inGamut("srgb")) {
+        if (model.isAnchor) return (<div><Anchor size={size}/> <AlertTriangle size={size}/> </div>)
+        if (model.isKey) return (<div><Key size={size}/> <AlertTriangle size={size}/> </div>)
+        return <AlertTriangle size={size}/>
+    }
+    if (model.isAnchor) return (<Anchor size={size}/>)
+    if (model.isKey) return (<Key size={size}/>)
+    return null
 }
 
 const contrastLabel = (model, delegate) => {
@@ -54,12 +69,6 @@ const contrastLabel = (model, delegate) => {
         if (white > black) return `Lc ${model.apca_white.toFixed(2)}`
         return `Lc ${model.apca_black.toFixed(2)}`
     }
-}
-
-const getIcon = (model) => {
-    const size = 20
-    if (model.isKey) return (<Key size={size}/>)
-    if (model.isAnchor) return (<Anchor size={size}/>)
 }
 
 const Wrapper = styled.div`
@@ -132,7 +141,11 @@ const BottomSection = styled.div`
 width: 72px;
 height: 20px;
 padding-left: 8px;
+padding-right: 8px;
 justify-content: center;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
 // border: ${props => props.model.lab_d65_l > 90 ? "1px solid #E2E2E2" : "1px solid #E2E2E2"};
 `;
 
