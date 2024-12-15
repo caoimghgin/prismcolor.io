@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useMantineColorScheme, Select, Space } from '@mantine/core';
+import { optimizations } from '../../models/OptimizationModel'
 
 import styled from "styled-components";
 
@@ -7,7 +8,7 @@ export default function SideNav(props) {
     const { setColorScheme } = useMantineColorScheme();
 
     const [selectedSwatchDisplayOption, setSelectedSwatchDisplayOption] = useState(swatchDisplayOptions[1]);
-    const [optimizationValue, setOptimizationValue] = useState("Universal");
+    const [optimizationValue, setOptimizationValue] = useState(optimizations[0].name);
     const [contrastValue, setContrastValue] = useState("WCAG21");
 
     const onChangeContrastHandler = (selection) => {
@@ -25,7 +26,7 @@ export default function SideNav(props) {
         <Select
           label = "Optimization"
           value = {optimizationValue}
-          data = {["Universal", "Material Design", "IBM Carbon", "Salesforce Lightning", "Adobe Spectrum", "Ant Design", "Accessible Palette", "ColorBox", "Genome"]}
+          data = {optimizations.map(item => item.name)}
           onChange={onChangeOptimizationHandler}
         />
               <Space h="md" />

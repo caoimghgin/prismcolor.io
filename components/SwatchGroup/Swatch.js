@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { Anchor, Key, AlertTriangle } from 'feather-icons-react';
+import { optimizations } from '../../models/OptimizationModel.js'
 
 export default function SwatchView(props) {
 
@@ -8,11 +9,11 @@ export default function SwatchView(props) {
 
     useEffect(() => {
         if (!props.model || !props.delegate) return
-        console.log("delegate:", props.delegate)
         setModel({ ...props.model, delegate: props.delegate })
     }, [props.model, props.delegate])
 
     const onClickHandler = () => {
+        console.log(optimizations)
         console.table(model)
         console.log(model.color)
         console.log("AM I IN GAMUT of sRGB?", model.color.inGamut("srgb"))     
@@ -23,6 +24,13 @@ export default function SwatchView(props) {
 
 const render = (model, delegate, onClickHandler) => {
     if (!model) return
+
+    const optimizationType = optimizations.find(item => item.name === delegate.optimization)
+    const optimizedWeight = optimizationType.values.find(item => item.univers === parseFloat(model.weight))
+    console.log(optimizationType)
+    console.log(optimizedWeight)
+    if (!optimizedWeight.weight) return
+
     return <Wrapper>
         {model.weight}    
         <Swatch model={model} delegate={delegate} onClick={onClickHandler}>
