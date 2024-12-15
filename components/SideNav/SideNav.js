@@ -25,12 +25,12 @@ export default function SideNav(props) {
         <Select
           label = "Optimization"
           value = {optimizationValue}
-          data = {["Universal", "Material Design", "IBM Carbon", "Salesforce Lightning", "Adobe Spectrum", "Ant Design", "Accessible Palette", "ColorBox", "Genome" ]}
+          data = {["Universal", "Material Design", "IBM Carbon", "Salesforce Lightning", "Adobe Spectrum", "Ant Design", "Accessible Palette", "ColorBox", "Genome"]}
           onChange={onChangeOptimizationHandler}
         />
               <Space h="md" />
                 <Select
-          label = "Swatch Contrast Tag"
+          label = "Contrast"
           value = {contrastValue}
           placeholder = "Pick Swatch Contrast"
           data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
