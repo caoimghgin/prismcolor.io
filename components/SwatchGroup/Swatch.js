@@ -63,7 +63,7 @@ const getIcon = (model) => {
 }
 
 const Wrapper = styled.div`
-font-size: 12px;
+font-size: 11px;
 font-weight: 600;
 font-family: "Helvetica";
 `
@@ -86,18 +86,17 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 width: 72px;
-font-size: 9px;
-font-weight: 600;
-font-family: "Helvetica";
 text-align: right;
 letter-spacing: .05rem;
 padding-right: 8px;
 padding-left: 8px;
-padding-top: 4px;
+padding-top: 2px;
 // border: ${props => props.model.lab_d65_l > 90 ? "1px solid #E2E2E2" : "1px solid #E2E2E2"};
 `;
 
 const TopSectionLeft = styled.div`
+padding-top: 2px;
+
 // border: ${props => props.model.lab_d65_l > 90 ? "1px solid #E2E2E2" : "1px solid #E2E2E2"};
 `;
 
