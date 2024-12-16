@@ -11,9 +11,9 @@ export default class PaletteModel {
             this.columns.push(new ColumnModel(index, arg.semantic, arg.keys));
         })
 
-        window.addEventListener('EXPORT_DATA', (e) => {
-            console.log(this.columns)
-        });
+        // window.addEventListener('EXPORT_DATA', (e) => {
+        //     console.log(this.columns)
+        // });
 
     }
 

@@ -26,13 +26,11 @@ const render = (model, delegate, onClickHandler) => {
     if (!model) return
 
     const optimizationType = optimizations.find(item => item.name === delegate.optimization)
-    const optimizedWeight = optimizationType.values.find(item => item.univers === parseFloat(model.weight))
-    console.log(optimizationType)
-    console.log(optimizedWeight)
-    if (!optimizedWeight.weight) return
+    const optimizedValue = optimizationType.values.find(item => item.univers === parseFloat(model.weight))
+    if (!optimizedValue.weight) return
 
     return <Wrapper>
-        {model.weight}    
+        {optimizedValue.weight}    
         <Swatch model={model} delegate={delegate} onClick={onClickHandler}>
             <TopSection model={model}>
                 <TopSectionLeft model={model}>{getSymbols(model)}</TopSectionLeft>
@@ -49,7 +47,6 @@ const render = (model, delegate, onClickHandler) => {
 
 const getSymbols = (model) => {
     const size = 14
-
     if (!model.color.inGamut("srgb")) {
         if (model.isAnchor) return (<div><Anchor size={size}/> <AlertTriangle size={size}/> </div>)
         if (model.isKey) return (<div><Key size={size}/> <AlertTriangle size={size}/> </div>)

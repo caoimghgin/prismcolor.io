@@ -27,7 +27,27 @@ export default function Create() {
         setModel(new PaletteModel(data))
     }, [data])
 
+    setTimeout(updateData, 3000);
+
     return render(model, appDelegate, setAppDelegate)
+
+    function updateData() {
+        console.log("Beep...")
+
+        const data = [
+            { index: 1, semantic: "primary", keys: ["#7b6747", "oklab(35.512% 0.00687 0.03516)"]}, 
+            { index: 2, semantic: "secondary", keys: ["#7b6747", "oklab(35.512% 0.00687 0.03516)"] },
+            { index: 3, semantic: "positive", keys: ["#007c00"] },
+            { index: 4, semantic: "negative", keys: ["#d80000"] },
+            { index: 5, semantic: "highlight", keys: ["#ffc107"] },
+            { index: 6, semantic: "info", keys: ["#035ef9"] },
+            { index: 7, semantic: "system", keys: ["#0A66D8"] },
+            { index: 8, semantic: "neutral", keys: null },
+        ]
+
+        setModel(new PaletteModel(data))
+
+    }
 
 }
 
@@ -43,12 +63,10 @@ const render = (model: any, delegate: any, setDelegate: any) => {
                 <Main>
                     <PaletteViewStyle>
                         {model.columns.map((column: any, index: number) =>
-                            <SwatchGroup key={index} model={column} delegate={delegate} variant={"BAR"} />
+                            <SwatchGroup key={index} model={column} delegate={delegate} />
                         )}
-                    </PaletteViewStyle>
-
+                    </PaletteViewStyle> 
                 </Main>
-
             </Container>
         </div>
     )
