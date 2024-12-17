@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useMantineColorScheme, Select, Space } from '@mantine/core';
 import { optimizations } from '../../models/OptimizationModel'
+import { Edit } from 'feather-icons-react';
 
 import styled from "styled-components";
 
@@ -45,6 +46,7 @@ export default function SideNav(props) {
                     <Chip>
                         <ChipColor model={item}/>
                         {item.semantic}
+                        <XXX><Edit size={18}/></XXX>
                         </Chip>
                     <Space h="sm" />
                 </>
@@ -53,6 +55,11 @@ export default function SideNav(props) {
         </Container>
       );
 }
+
+const XXX = styled.div`
+margin-left: auto; 
+margin-right: 0;
+`
 
 const ChipColor = styled.div`
     height:64px;
@@ -96,6 +103,7 @@ const Chip = styled.div`
     align-items: center;
     font-size: 13px;
     font-weight: 600;
+    padding-right: 16px;
 `;
 
 const Container = styled.div`
