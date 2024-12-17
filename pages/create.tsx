@@ -38,7 +38,7 @@ const render = (model: any, delegate: any, setDelegate: any) => {
             <NavBar />
             <Container>
                 <Left>
-                    <SideNav delegate={delegate} setDelegate={setDelegate} />
+                    <SideNav model={model} delegate={delegate} setDelegate={setDelegate} />
                 </Left>
                 <Main>
                     <PaletteView model={model} delegate={delegate} setDelegate={setDelegate}/>
