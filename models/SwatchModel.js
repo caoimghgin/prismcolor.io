@@ -6,7 +6,7 @@ export default class SwatchModel {
 
     constructor(args) {
 
-        const { color, destinationSpace, priority, isKey, isAnchor } = args
+        const { color, destinationSpace, priority, isKey, isAnchor, isLock } = args
 
         this.color = this.normalizeColorToDestinationGamut(color, destinationSpace);
         this.value = { origin: color.to(color.space.id).toString(), destination: color.to(destinationSpace).toString(), hex: color.as("hex") }
@@ -15,6 +15,7 @@ export default class SwatchModel {
         this.priority = (priority ? priority : 0)
         this.isKey = isKey;
         this.isAnchor = isAnchor;
+        this.isLock = isLock;
         this.wcag_white = color.contrast(new Color("White"), "WCAG21")
         this.wcag_black = color.contrast(new Color("Black"), "WCAG21")
         this.apca_white = color.contrast(new Color("White"), "APCA")

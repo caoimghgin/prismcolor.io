@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import { Anchor, Key, AlertTriangle } from 'feather-icons-react';
+import { Anchor, Key, Lock, AlertTriangle } from 'feather-icons-react';
 import { optimizations } from '../../models/OptimizationModel.js'
 
 export default function SwatchView(props) {
@@ -53,6 +53,8 @@ const getSymbols = (model) => {
         return <AlertTriangle size={size}/>
     }
     if (model.isAnchor) return (<Anchor size={size}/>)
+        if (model.isLock) return (<Lock size={size}/>)
+
     if (model.isKey) return (<Key size={size}/>)
     return null
 }

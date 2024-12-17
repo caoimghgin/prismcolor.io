@@ -53,11 +53,11 @@ export default class ColumnModel {
         const targetsLength = targets.length - 1
         if (this.swatches[0] === null) {
             const color = new ColorModel("White");
-            this.swatches[0] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isAnchor: true })
+            this.swatches[0] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isLock: true })
         }
         if (this.swatches[targetsLength] === null) {
             const color = new ColorModel("Black");
-            this.swatches[targetsLength] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isAnchor: true })
+            this.swatches[targetsLength] = new SwatchModel({ color: color, destinationSpace: this.destinationSpace, isLock: true })
         }
     }
 
