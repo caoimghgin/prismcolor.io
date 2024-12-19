@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PaletteModel from "../models/PaletteModel"
 import SideNav from "../components/SideNav/SideNav"
+import NavBar from "@/components/NavBar/NavBar";
 import styled from "styled-components";
 import PaletteView from "@/components/PaletteView/PaletteView";
 
@@ -75,9 +76,3 @@ const Main = styled.div`
 const Container = styled.div`
   display: flex;
     `
-const NavBar = styled.div`
-  width: 100%;
-  height: 56px;
-  border-bottom:1px solid #e3e3e3;
-  background: #ffffff;
-`
