@@ -23,6 +23,14 @@ export default function SideNav(props) {
         console.log(props.model)
     }
 
+    const onClick = () => {
+        if (props.mode === "Palette") {
+            props.setMode("Edit")
+        } else {
+            props.setMode("Palette")
+        }
+    }
+
     return (
         <Container>
         <Select
@@ -43,7 +51,7 @@ export default function SideNav(props) {
         {props.model.columns.map(item => {
             return (
                 <>
-                    <Chip>
+                    <Chip onClick={onClick}>
                         <ChipColor model={item}/>
                         {item.semantic}
                         <XXX><Edit size={18}/></XXX>

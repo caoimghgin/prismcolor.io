@@ -5,9 +5,11 @@ import styled from "styled-components";
 import PaletteView from "@/components/PaletteView/PaletteView";
 
 export default function Create() {
-    const [appDelegate, setAppDelegate] = useState({ optimization: "Universal", contrast: "WCAG21" });
+
+    const [delegate, setDelegate] = useState({ optimization: "Universal", contrast: "WCAG21" });
     const [data, setData] = useState<SemanticPaletteScale[]>();
     const [model, setModel] = useState<any>();
+    const [mode, setMode] = useState("Palette");
 
     useEffect(() => {
         setData([
@@ -27,24 +29,31 @@ export default function Create() {
         setModel(new PaletteModel(data))
     }, [data])
 
-    return render(model, appDelegate, setAppDelegate)
+    return render(model, delegate, setDelegate, mode, setMode)
 
 }
 
-const render = (model: any, delegate: any, setDelegate: any) => {
+const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode: any) => {
     if (!model) return
+        return (
+            <>
+                <NavBar />
+                <Container>
+                    <Left>
+                        <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
+                    </Left>
+                    <MainView model={model} mode={mode} delegate={delegate} />
+                </Container>
+            </>
+        )
+}
+
+function MainView (props: { model: any; delegate: any; mode: any; })  {
+    const {model, delegate, mode} = props
     return (
-        <>
-            <NavBar />
-            <Container>
-                <Left>
-                    <SideNav model={model} delegate={delegate} setDelegate={setDelegate} />
-                </Left>
-                <Main>
-                    <PaletteView model={model} delegate={delegate} setDelegate={setDelegate}/>
-                </Main>
-            </Container>
-        </>
+        <Main>
+            {mode === "Palette" ? <PaletteView model={model} delegate={delegate}  /> : <>:::GOTO EDIT VIEW:::<PaletteView model={model} delegate={delegate} /></>}
+        </Main>
     )
 }
 
