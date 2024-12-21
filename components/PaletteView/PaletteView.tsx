@@ -6,5 +6,4 @@ export default function PaletteView(props: any) {
     const { model, delegate, mode } = props
     if (props.delegate.editing) return ( <ModeEdit model={model} mode={mode} delegate={delegate} /> )
     return ( <ModeView model={model} mode={mode} delegate={delegate} /> )
-   
 }

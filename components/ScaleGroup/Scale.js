@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import { Anchor, Key, Lock, AlertTriangle } from 'feather-icons-react';
+import { Anchor, Key, Lock, AlertTriangle, EyeOff } from 'feather-icons-react';
 import { optimizations } from '../../models/OptimizationModel.js'
+const size = 14
 
 export default function SwatchView(props) {
 
@@ -27,40 +28,41 @@ const render = (model, delegate, onClickHandler) => {
 
     const optimizationType = optimizations.find(item => item.name === delegate.optimization)
     const optimizedValue = optimizationType.values.find(item => item.univers === parseFloat(model.weight))
-    if (!optimizedValue.weight) return
+    // if (!optimizedValue.weight) return
 
-
-    console.log(model)
-
+    console.log(optimizedValue.weight)
 
     return <Wrapper>
-        <Swatch model={model} delegate={delegate} onClick={onClickHandler}>
+        <Label> {optimizedValue.weight ? optimizedValue.weight : <EyeOff size={12}/> }  </Label>
+        
+        {
+            optimizedValue.weight ? 
+            <Swatch model={model} delegate={delegate} optimizedWeight={optimizedValue.weight} onClick={onClickHandler}>
             <>
             <TopSection model={model}>
-            <TopSectionMiddle model={model}>{getSymbols(model)}</TopSectionMiddle>
+            <TopSectionMiddle model={model}>{getSymbols(model, optimizedValue.weight)}</TopSectionMiddle>
         </TopSection>
             </>
-
-            {/* <TopSection model={model}>
-                <TopSectionLeft model={model}>{getSymbols(model)}</TopSectionLeft>
-                <TopSectionMiddle model={model}></TopSectionMiddle>
-                <TopSectionRight model={model}>{model.weight}</TopSectionRight>
-            </TopSection>
-            <MiddleSection model={model}></MiddleSection>
-            <BottomSection model={model}>
-                {contrastLabel(model, delegate)}
-            </BottomSection> */}
-        </Swatch>{model.weight}
+        </Swatch> : 
+            <SwatchDisabled model={model} delegate={delegate} optimizedWeight={optimizedValue.weight} onClick={onClickHandler}>
+            <>
+            <TopSection model={model}>
+            <TopSectionMiddle model={model}>{getSymbols(model, optimizedValue.weight)}</TopSectionMiddle>
+        </TopSection>
+            </>
+        </SwatchDisabled>
+        }
+        <Label>{model.weight}</Label>
     </Wrapper>
 }
 
 const getSymbols = (model) => {
-    const size = 14
     // if (!model.color.inGamut("srgb")) {
     //     if (model.isAnchor) return (<div><Anchor size={size}/> <AlertTriangle size={size}/> </div>)
     //     if (model.isKey) return (<div><Key size={size}/> <AlertTriangle size={size}/> </div>)
     //     return <AlertTriangle size={size}/>
     // }
+
     if (model.isAnchor) return (<Anchor size={size}/>)
         if (model.isLock) return (<Lock size={size}/>)
 
@@ -91,7 +93,28 @@ const Wrapper = styled.div`
 font-size: 11px;
 font-weight: 600;
 font-family: "Helvetica";
+`
+const Label = styled.div`
+width: 40px;
+min-width: 40px;
+text-align: center;
+`
 
+const SwatchDisabled = styled.div`
+width: 40px;
+min-width: 40px;
+height: 72px;
+min-height: 72px;
+background: repeating-linear-gradient(
+  -45deg,
+  #f1f1f1,
+  #f1f1f1 9px,
+  #e3e3e3 9px,
+  #e3e3e3 18px
+);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const Swatch = styled.div`
@@ -99,7 +122,7 @@ width: 40px;
 min-width: 40px;
 height: 72px;
 min-height: 72px;
-background: ${props => props.model.value.destination};
+background: ${props => props.optimizedWeight || props.model.lock ? props.model.value.destination : 'white'};
 color: ${props => swatchFrgColor(props)};
   display: flex;
   align-items: center;
@@ -110,6 +133,11 @@ border: ${props => props.model.lab_d65_l > 99 ? "1px solid #f1f1f1" : null};
 // `;
 
 const swatchFrgColor = (props) => {
+
+    console.log(props)
+    if (!props.optimizedWeight) return 'white'
+
+
     if (props.delegate.contrast === "WCAG21") {
         return props.model.lab_d65_l < 50 ? "white" : "black"
     }

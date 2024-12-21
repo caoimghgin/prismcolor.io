@@ -43,7 +43,9 @@ const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode:
                 <Left>
                     <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
                 </Left>
+                <Right>
                     <PaletteView model={model} delegate={delegate} mode={mode} />
+                </Right>
             </Main>
         </Wrapper>
     )
@@ -56,13 +58,11 @@ const Left = styled.div`
   flex: 0 0 280px;
   border-right: 1px solid #e3e3e3;
   background: #f1f1f1;
-
 `
 
 const Right = styled.div`
     background: #f7f7f7;
-
-
+    flex-grow: 1;
 `
 
 const Main = styled.div`

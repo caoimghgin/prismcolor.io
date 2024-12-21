@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react"
 import { useMantineColorScheme, Select, Space } from '@mantine/core';
-import { Edit } from 'feather-icons-react';
+import { Edit, Save } from 'feather-icons-react';
 import { optimizations } from '../../../models/OptimizationModel'
 
 export default function Main(props) {
@@ -25,12 +25,15 @@ export default function Main(props) {
 
     return (
         <>
-        {/* <Select
+        <Select
             label = "Optimization"
             value = {props.delegate.optimization}
             data = {optimizations.map(item => item.name)}
             onChange={onChangeOptimizationHandler}
         />
+        <Space h={36} /> 
+
+        {/* 
         <Space h="8" />
         <Select
             label = "Contrast"
@@ -39,12 +42,12 @@ export default function Main(props) {
             data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
             onChange={onChangeContrastHandler}
         />
-        <Space h="36" /> */}
+        */}
         <>
             <Chip onClick={onClick}>
                 <ChipGradientSwatch model={props.delegate.editing}/>
                 {props.delegate.editing.semantic}
-                <Icon><Edit size={18}/></Icon>
+                <Icon><Save size={18}/></Icon>
             </Chip>
             <Space h="sm" />
         </>

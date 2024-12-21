@@ -17,7 +17,6 @@ export default function SwatchGroupView(props) {
 const Container = styled.div`
     margin: 16px;
     display: flex;
-    background: white;
     `
 
 const Title = styled.div`
@@ -32,5 +31,4 @@ const Main = styled.div`
     flex-wrap: wrap;
     width: 100%
     flex: 1;
-    background: white;
     ` 

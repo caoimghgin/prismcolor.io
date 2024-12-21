@@ -30,7 +30,7 @@ const universal = Object.freeze({
 const genome = Object.freeze({
     name: "Genome",
     values: [
-        { target: 100, univers: 0, weight: undefined },
+        { target: 100, univers: 0, weight: "000" },
         { target: 97.5, univers: 25, weight: "015" },
         { target: 95, univers: 50, weight: "025" },
         { target: 93.5, univers: 75, weight: undefined },
@@ -52,7 +52,7 @@ const genome = Object.freeze({
         { target: 15, univers: 850, weight: "800" },
         { target: 10, univers: 900, weight: "900" },
         { target: 5, univers: 950, weight: undefined },
-        { target: 0, univers: 999, weight: undefined },
+        { target: 0, univers: 999, weight: "950" },
     ],
 });
 
