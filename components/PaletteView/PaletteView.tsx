@@ -1,20 +1,10 @@
-import styled from "styled-components"
-import SwatchGroup from "../SwatchGroup/SwatchGroup"
+import ModeView from "./Mode/View.js"
+import ModeEdit from "./Mode/Edit.js"
 
 export default function PaletteView(props: any) {
     if (!props) return
-    return (
-        <PaletteViewStyle>
-            {props.model.columns.map((column: any, index: number) =>
-                <SwatchGroup key={index} model={column} delegate={props.delegate} />
-            )}
-        </PaletteViewStyle>
-    )
+    const { model, delegate, mode } = props
+    if (props.mode === "Palette") 
+        return ( <ModeView model={model} mode={mode} delegate={delegate} /> )
+    return ( <ModeEdit model={model} mode={mode} delegate={delegate} /> )
 }
-
-const PaletteViewStyle = styled.div`
-border:1px solid #e3e3e3;
-border-radius: 8px;
-margin:16px;
-background: #ffffff;
-`

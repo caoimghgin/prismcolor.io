@@ -43,27 +43,12 @@ const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode:
                     <Left>
                         <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
                     </Left>
-                    <MainView model={model} mode={mode} delegate={delegate} />
+                    <PaletteView model={model} delegate={delegate} mode={mode} />
                 </Container>
             </>
         )
 }
 
-function MainView (props: { model: any; delegate: any; mode: any; })  {
-    const {model, delegate, mode} = props
-    return (
-        <Main>
-            {mode === "Palette" ? <PaletteView model={model} delegate={delegate}  /> : <>:::GOTO EDIT VIEW:::<PaletteView model={model} delegate={delegate} /></>}
-        </Main>
-    )
-}
-
-const PaletteViewStyle = styled.div`
-border:1px solid #e3e3e3;
-border-radius: 8px;
-margin:16px;
-background: #ffffff;
-`
 const Left = styled.div`
   flex: 0 0 300px;
   border-right: 1px solid #e3e3e3;
