@@ -69,7 +69,7 @@ const ChipGradientSwatch = styled.div`
     margin-right: 8px;
     border-radius: 8px 0px 0px 8px;
     border: 1px solid #e3e3e3;
-    background-image: linear-gradient(45deg,  
+    background-image: linear-gradient(-45deg,  
     ${props => props.model.swatches[22].hex}, 
     ${props => props.model.swatches[21].hex}, 
     ${props => props.model.swatches[20].hex}, 

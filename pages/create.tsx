@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import PaletteModel from "../models/PaletteModel"
-import SideNav from "../components/SideNav/SideNav"
+import PaletteModel from "../models/PaletteModel";
+import SideNav from "../components/SideNav/SideNav";
 import NavBar from "@/components/NavBar/NavBar";
 import styled from "styled-components";
 import PaletteView from "@/components/PaletteView/PaletteView";
@@ -43,9 +43,7 @@ const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode:
                 <Left>
                     <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
                 </Left>
-                <Right>
                     <PaletteView model={model} delegate={delegate} mode={mode} />
-                </Right>
             </Main>
         </Wrapper>
     )
@@ -55,13 +53,16 @@ const Wrapper = styled.div`
 `
 
 const Left = styled.div`
-  flex: 0 0 300px;
+  flex: 0 0 280px;
   border-right: 1px solid #e3e3e3;
-  background: #f7f7f7;
+  background: #f1f1f1;
 
 `
 
 const Right = styled.div`
+    background: #f7f7f7;
+
+
 `
 
 const Main = styled.div`

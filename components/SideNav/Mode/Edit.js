@@ -25,7 +25,7 @@ export default function Main(props) {
 
     return (
         <>
-        <Select
+        {/* <Select
             label = "Optimization"
             value = {props.delegate.optimization}
             data = {optimizations.map(item => item.name)}
@@ -39,11 +39,11 @@ export default function Main(props) {
             data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
             onChange={onChangeContrastHandler}
         />
-        <Space h="36" />
+        <Space h="36" /> */}
         <>
             <Chip onClick={onClick}>
                 <ChipGradientSwatch model={props.delegate.editing}/>
-                {props.model.columns[0].semantic}
+                {props.delegate.editing.semantic}
                 <Icon><Edit size={18}/></Icon>
             </Chip>
             <Space h="sm" />
@@ -63,7 +63,7 @@ const ChipGradientSwatch = styled.div`
     margin-right: 8px;
     border-radius: 8px 0px 0px 8px;
     border: 1px solid #e3e3e3;
-    background-image: linear-gradient(45deg,  
+    background-image: linear-gradient(-45deg,  
     ${props => props.model.swatches[22].hex}, 
     ${props => props.model.swatches[21].hex}, 
     ${props => props.model.swatches[20].hex}, 
