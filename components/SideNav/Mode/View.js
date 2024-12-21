@@ -7,41 +7,36 @@ import { optimizations } from '../../../models/OptimizationModel'
 export default function Main(props) {
     const { setColorScheme } = useMantineColorScheme();
 
-    const [selectedSwatchDisplayOption, setSelectedSwatchDisplayOption] = useState(swatchDisplayOptions[1]);
-    const [optimizationValue, setOptimizationValue] = useState(optimizations[0].name);
-    const [contrastValue, setContrastValue] = useState("WCAG21");
-
-    const onChangeContrastHandler = (selection) => {
-        setContrastValue(selection)
-        props.setDelegate({...props.delegate, contrast: selection})
+    const onChangeContrastHandler = (contrast) => {
+        const result = {...props.delegate, contrast: contrast}
+        props.setDelegate(result)
+        console.log(result)
     }
 
-    const onChangeOptimizationHandler = (selection) => {
-        setOptimizationValue(selection)
-        props.setDelegate({...props.delegate, optimization: selection})
-        console.log(props.model)
+    const onChangeOptimizationHandler = (optimization) => {
+        const result = {...props.delegate, optimization: optimization}
+        props.setDelegate(result)
+        console.log(result)
     }
 
-    const onClick = () => {
-        if (props.mode === "Palette") {
-            props.setMode("Edit")
-        } else {
-            props.setMode("Palette")
-        }
+    const onClick = (value) => {
+        const result = {...props.delegate, editing: value}
+        props.setDelegate(result)
+        console.log(result)
     }
 
     return (
-        <Container>
+        <>
         <Select
             label = "Optimization"
-            value = {optimizationValue}
+            value = {props.delegate.optimization}
             data = {optimizations.map(item => item.name)}
             onChange={onChangeOptimizationHandler}
         />
         <Space h="8" />
         <Select
             label = "Contrast"
-            value = {contrastValue}
+            value = {props.delegate.contrast}
             placeholder = "Pick Swatch Contrast"
             data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
             onChange={onChangeContrastHandler}
@@ -49,26 +44,26 @@ export default function Main(props) {
         <Space h="36" />
         {props.model.columns.map(item => {
             return (
-                <>
-                    <Chip onClick={onClick}>
-                        <ChipColor model={item}/>
-                        {item.semantic}
-                        <XXX><Edit size={18}/></XXX>
-                        </Chip>
-                    <Space h="sm" />
-                </>
+            <>
+                <Chip onClick={() => onClick(item)}>
+                    <ChipGradientSwatch model={item}/>
+                    {item.semantic}
+                    <Icon><Edit size={18}/></Icon>
+                </Chip>
+                <Space h="sm" />
+            </>
             )
         })}
-        </Container>
+        </>
       );
 }
 
-const XXX = styled.div`
+const Icon = styled.div`
 margin-left: auto; 
 margin-right: 0;
 `
 
-const ChipColor = styled.div`
+const ChipGradientSwatch = styled.div`
     height:64px;
     width:64px;
     margin-right: 8px;
@@ -113,18 +108,10 @@ const Chip = styled.div`
     padding-right: 16px;
 `;
 
-const Container = styled.div`
+const Wrapper = styled.div`
     padding: 16px;
 `;
 
-const View = styled.div`
-    height: 100%;
-    width: 300px;
-    top: 0;
-    left: 0;
-    background-color: ##f1f1f1;
-    padding: 36px;
-`;
 
 const swatchDisplayOptions = [
     { value: 'none', label: 'NONE' },

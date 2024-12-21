@@ -36,28 +36,35 @@ export default function Create() {
 
 const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode: any) => {
     if (!model) return
-        return (
-            <>
-                <NavBar />
-                <Container>
-                    <Left>
-                        <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
-                    </Left>
+    return (
+        <Wrapper>
+            <NavBar />
+            <Main>
+                <Left>
+                    <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
+                </Left>
+                <Right>
                     <PaletteView model={model} delegate={delegate} mode={mode} />
-                </Container>
-            </>
-        )
+                </Right>
+            </Main>
+        </Wrapper>
+    )
 }
+
+const Wrapper = styled.div`
+`
 
 const Left = styled.div`
   flex: 0 0 300px;
   border-right: 1px solid #e3e3e3;
   background: #f7f7f7;
+
 `
+
+const Right = styled.div`
+`
+
 const Main = styled.div`
-  flex: 1;
-  background: #f1f1f1;
-`
-const Container = styled.div`
   display: flex;
-    `
+  height:100%
+`

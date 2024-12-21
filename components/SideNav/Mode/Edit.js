@@ -7,94 +7,57 @@ import { optimizations } from '../../../models/OptimizationModel'
 export default function Main(props) {
     const { setColorScheme } = useMantineColorScheme();
 
-    const [selectedSwatchDisplayOption, setSelectedSwatchDisplayOption] = useState(swatchDisplayOptions[1]);
-    const [optimizationValue, setOptimizationValue] = useState(optimizations[0].name);
-    const [contrastValue, setContrastValue] = useState("WCAG21");
-
-    const onChangeContrastHandler = (selection) => {
-        setContrastValue(selection)
-        props.setDelegate({...props.delegate, contrast: selection})
+    const onChangeContrastHandler = (contrast) => {
+        const result = {...props.delegate, contrast: contrast}
+        props.setDelegate(result)
+        console.log(result)
     }
 
-    const onChangeOptimizationHandler = (selection) => {
-        setOptimizationValue(selection)
-        props.setDelegate({...props.delegate, optimization: selection})
-        console.log(props.model)
+    const onChangeOptimizationHandler = (optimization) => {
+        const result = {...props.delegate, optimization: optimization}
+        props.setDelegate(result)
+        console.log(result)
     }
 
-    const onClick = () => {
-        if (props.mode === "Palette") {
-            props.setMode("Edit")
-        } else {
-            props.setMode("Palette")
-        }
+    const onClick = (event) => {
+        props.setDelegate({...props.delegate, editing: null})
     }
 
     return (
-        <Container>
+        <>
         <Select
             label = "Optimization"
-            value = {optimizationValue}
+            value = {props.delegate.optimization}
             data = {optimizations.map(item => item.name)}
             onChange={onChangeOptimizationHandler}
         />
         <Space h="8" />
         <Select
             label = "Contrast"
-            value = {contrastValue}
+            value = {props.delegate.contrast}
             placeholder = "Pick Swatch Contrast"
             data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
             onChange={onChangeContrastHandler}
         />
         <Space h="36" />
-
-
-                <>
-                    <Chip onClick={onClick}>
-                        <ChipColor model={props.model.columns[0]}/>
-                        {props.model.columns[0].semantic}
-                        <XXX><Edit size={18}/></XXX>
-                        </Chip>
-                    <Space h="sm" />
-                </>
-
-
-{/* 
-        {props.model.columns.map(item => {
-            return (
-                <>
-                    <Chip onClick={onClick}>
-                        <ChipColor model={item}/>
-                        {item.semantic}
-                        <XXX><Edit size={18}/></XXX>
-                        </Chip>
-                    <Space h="sm" />
-                </>
-            )
-        })} */}
-
-        {/* {props.model.columns.map(item => {
-            return (
-                <>
-                    <Chip onClick={onClick}>
-                        <ChipColor model={item}/>
-                        {item.semantic}
-                        <XXX><Edit size={18}/></XXX>
-                        </Chip>
-                    <Space h="sm" />
-                </>
-            )
-        })} */}
-        </Container>
+        <>
+            <Chip onClick={onClick}>
+                <ChipGradientSwatch model={props.delegate.editing}/>
+                {props.model.columns[0].semantic}
+                <Icon><Edit size={18}/></Icon>
+            </Chip>
+            <Space h="sm" />
+        </>
+        </>
       );
 }
 
-const XXX = styled.div`
+const Icon = styled.div`
 margin-left: auto; 
 margin-right: 0;
 `
 
-const ChipColor = styled.div`
+const ChipGradientSwatch = styled.div`
     height:64px;
     width:64px;
     margin-right: 8px;
@@ -137,19 +100,6 @@ const Chip = styled.div`
     font-size: 13px;
     font-weight: 600;
     padding-right: 16px;
-`;
-
-const Container = styled.div`
-    padding: 16px;
-`;
-
-const View = styled.div`
-    height: 100%;
-    width: 300px;
-    top: 0;
-    left: 0;
-    background-color: ##f1f1f1;
-    padding: 36px;
 `;
 
 const swatchDisplayOptions = [
