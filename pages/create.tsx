@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import PaletteModel from "../models/PaletteModel"
-import SideNav from "../components/SideNav/SideNav"
+import PaletteModel from "../models/PaletteModel";
+import SideNav from "../components/SideNav/SideNav";
+import NavBar from "@/components/NavBar/NavBar";
 import styled from "styled-components";
 import PaletteView from "@/components/PaletteView/PaletteView";
 
 export default function Create() {
-    const [appDelegate, setAppDelegate] = useState({ optimization: "Universal", contrast: "WCAG21" });
+
+    const [delegate, setDelegate] = useState({ optimization: "Universal", contrast: "WCAG21" });
     const [data, setData] = useState<SemanticPaletteScale[]>();
     const [model, setModel] = useState<any>();
+    const [mode, setMode] = useState("Palette");
 
     useEffect(() => {
         setData([
@@ -27,48 +30,42 @@ export default function Create() {
         setModel(new PaletteModel(data))
     }, [data])
 
-    return render(model, appDelegate, setAppDelegate)
+    return render(model, delegate, setDelegate, mode, setMode)
 
 }
 
-const render = (model: any, delegate: any, setDelegate: any) => {
+const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode: any) => {
     if (!model) return
     return (
-        <>
+        <Wrapper>
             <NavBar />
-            <Container>
+            <Main>
                 <Left>
-                    <SideNav model={model} delegate={delegate} setDelegate={setDelegate} />
+                    <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
                 </Left>
-                <Main>
-                    <PaletteView model={model} delegate={delegate} setDelegate={setDelegate}/>
-                </Main>
-            </Container>
-        </>
+                <Right>
+                    <PaletteView model={model} delegate={delegate} mode={mode} />
+                </Right>
+            </Main>
+        </Wrapper>
     )
 }
 
-const PaletteViewStyle = styled.div`
-border:1px solid #e3e3e3;
-border-radius: 8px;
-margin:16px;
-background: #ffffff;
+const Wrapper = styled.div`
 `
+
 const Left = styled.div`
-  flex: 0 0 300px;
+  flex: 0 0 280px;
   border-right: 1px solid #e3e3e3;
-  background: #f7f7f7;
-`
-const Main = styled.div`
-  flex: 1;
   background: #f1f1f1;
 `
-const Container = styled.div`
+
+const Right = styled.div`
+    background: #f7f7f7;
+    flex-grow: 1;
+`
+
+const Main = styled.div`
   display: flex;
-    `
-const NavBar = styled.div`
-  width: 100%;
-  height: 56px;
-  border-bottom:1px solid #e3e3e3;
-  background: #ffffff;
+  height:100%
 `
