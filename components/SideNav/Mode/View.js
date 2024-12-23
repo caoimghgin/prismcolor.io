@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react"
 import { useMantineColorScheme, Select, Space } from '@mantine/core';
 import { Edit } from 'feather-icons-react';
+import { IconPencil } from "@tabler/icons-react";
 import { optimizations } from '../../../models/OptimizationModel'
 
 export default function Main(props) {
@@ -48,7 +48,7 @@ export default function Main(props) {
                 <Chip onClick={() => onClick(item)}>
                     <ChipGradientSwatch model={item}/>
                     {item.semantic}
-                    <Icon><Edit size={18}/></Icon>
+                    <Icon><IconPencil size={18}/></Icon>
                 </Chip>
                 <Space h="sm" />
             </>
@@ -106,6 +106,8 @@ const Chip = styled.div`
     font-size: 13px;
     font-weight: 600;
     padding-right: 16px;
+      cursor: pointer;
+
 `;
 
 const Wrapper = styled.div`

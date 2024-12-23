@@ -103,6 +103,8 @@ const Chip = styled.div`
     font-size: 13px;
     font-weight: 600;
     padding-right: 16px;
+      cursor: pointer;
+
 `;
 
 const swatchDisplayOptions = [
