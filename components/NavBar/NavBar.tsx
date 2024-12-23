@@ -3,22 +3,23 @@ import styled from "styled-components";
 
 export default function NavBar() {
     return (
-        <Container>
+        <Wrapper>
           <Image 
-            src="/logo.svg"
-            width={140}
-            height={50}
+            src="images/logo.svg"
+            width={130}
+            height={38}
             alt="PrismColor Logo"
           />
-        </Container>
+        </Wrapper>
     )
 }
 
-const Container = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   height: 56px;
   border-bottom:1px solid #e3e3e3;
   background: #ffffff;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-top:8px;
+  padding-left: 24px;
+  padding-right: 24px;
 `
