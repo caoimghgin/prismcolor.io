@@ -28,13 +28,43 @@ const render = (model, delegate, onClickHandler) => {
 
     const optimizationType = optimizations.find(item => item.name === delegate.optimization)
     const optimizedValue = optimizationType.values.find(item => item.univers === parseFloat(model.weight))
-    // if (!optimizedValue.weight) return
 
-    console.log(optimizedValue.weight)
+    if (model.weight === "000") {
+        return (
+            <Wrapper>
+                <Label> {optimizedValue.weight ? optimizedValue.weight : <EyeOff size={12}/> }  </Label>
+            <Swatch model={model} delegate={delegate} optimizedWeight={optimizedValue.weight} onClick={onClickHandler}>
+            <>
+            <TopSection model={model}>
+            <TopSectionMiddle model={model}>{getSymbols(model, optimizedValue.weight)}</TopSectionMiddle>
+        </TopSection>
+            </>
+        </Swatch>
+        <UniversLabel>{model.weight}</UniversLabel>
+
+            </Wrapper>
+        )
+    }
+
+    if (model.weight === "999") {
+        return (
+            <Wrapper>
+                <Label> {optimizedValue.weight ? optimizedValue.weight : <EyeOff size={12}/> }  </Label>
+                <Swatch model={model} delegate={delegate} optimizedWeight={optimizedValue.weight} onClick={onClickHandler}>
+            <>
+            <TopSection model={model}>
+            <TopSectionMiddle model={model}>{getSymbols(model, optimizedValue.weight)}</TopSectionMiddle>
+        </TopSection>
+            </>
+        </Swatch>
+        <UniversLabel>{model.weight}</UniversLabel>
+
+            </Wrapper>
+        )
+    }
 
     return <Wrapper>
         <Label> {optimizedValue.weight ? optimizedValue.weight : <EyeOff size={12}/> }  </Label>
-        
         {
             optimizedValue.weight ? 
             <Swatch model={model} delegate={delegate} optimizedWeight={optimizedValue.weight} onClick={onClickHandler}>
@@ -52,17 +82,11 @@ const render = (model, delegate, onClickHandler) => {
             </>
         </SwatchDisabled>
         }
-        <Label>{model.weight}</Label>
+        <UniversLabel>{model.weight}</UniversLabel>
     </Wrapper>
 }
 
 const getSymbols = (model) => {
-    // if (!model.color.inGamut("srgb")) {
-    //     if (model.isAnchor) return (<div><Anchor size={size}/> <AlertTriangle size={size}/> </div>)
-    //     if (model.isKey) return (<div><Key size={size}/> <AlertTriangle size={size}/> </div>)
-    //     return <AlertTriangle size={size}/>
-    // }
-
     if (model.isAnchor) return (<Anchor size={size}/>)
         if (model.isLock) return (<Lock size={size}/>)
 
@@ -93,11 +117,18 @@ const Wrapper = styled.div`
 font-size: 11px;
 font-weight: 600;
 font-family: "Helvetica";
+letter-spacing: 0.03rem;
 `
 const Label = styled.div`
 width: 40px;
 min-width: 40px;
 text-align: center;
+`
+const UniversLabel = styled.div`
+width: 40px;
+min-width: 40px;
+text-align: center;
+color: #035ef9;
 `
 
 const SwatchDisabled = styled.div`
@@ -122,7 +153,7 @@ width: 40px;
 min-width: 40px;
 height: 72px;
 min-height: 72px;
-background: ${props => props.optimizedWeight || props.model.lock ? props.model.value.destination : 'white'};
+background: ${props => props.optimizedWeight || props.model.lock ? props.model.value.destination : props.model.value.destination};
 color: ${props => swatchFrgColor(props)};
   display: flex;
   align-items: center;
@@ -134,9 +165,7 @@ border: ${props => props.model.lab_d65_l > 99 ? "1px solid #f1f1f1" : null};
 
 const swatchFrgColor = (props) => {
 
-    console.log(props)
-    if (!props.optimizedWeight) return 'white'
-
+    // if (!props.optimizedWeight) return 'white'
 
     if (props.delegate.contrast === "WCAG21") {
         return props.model.lab_d65_l < 50 ? "white" : "black"
@@ -170,7 +199,6 @@ const TopSectionLeft = styled.div`
 padding-top: 2px;
 // border: ${props => props.model.lab_d65_l > 90 ? "1px solid #E2E2E2" : "1px solid #E2E2E2"};
 `;
-
 
 const TopSectionMiddle = styled.div`
   display: flex;
