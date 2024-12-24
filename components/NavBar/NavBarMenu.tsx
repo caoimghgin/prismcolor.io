@@ -1,4 +1,4 @@
-import { Modal, Menu, Button } from "@mantine/core";
+import { Menu, Button } from "@mantine/core";
 import { IconSettings, IconPlug, IconBrandGithub, IconBrandYoutube, IconBrandMedium, IconBrandBluesky, IconBrandX, IconBrandLinkedin } from "@tabler/icons-react";
 
 export default function NavBarMenu() {
@@ -11,7 +11,7 @@ export default function NavBarMenu() {
                 
                 <Menu.Label>Figma</Menu.Label>
                 <Menu.Item leftSection={<IconPlug style={{ width: 18, height: 18 }} />} onClick={() => windowOpen('https://www.figma.com/community/plugin/1143283713928897621/genome-import')}>
-                    Install Palette Importer
+                    PrismColor.io Importer Plugin
                 </Menu.Item>
 
                 <Menu.Label>Open Source</Menu.Label>
@@ -20,7 +20,7 @@ export default function NavBarMenu() {
                 </Menu.Item>
 
                 <Menu.Item leftSection={<IconBrandGithub style={{ width: 18, height: 18 }} />} onClick={() => windowOpen('https://github.com/caoimghgin/genome-import-figma')}>
-                    Palette Importer Plugin (Code)
+                PrismColor.io Importer (Code)
                 </Menu.Item>
 
                 <Menu.Label>Learning</Menu.Label>

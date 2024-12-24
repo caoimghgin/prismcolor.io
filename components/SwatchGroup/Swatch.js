@@ -72,6 +72,19 @@ const contrastLabel = (model, delegate) => {
         if (white > black) return `Lc ${model.apca_white.toFixed(2)}`
         return `Lc ${model.apca_black.toFixed(2)}`
     }
+
+    if (delegate.contrast === "Ok L*") {
+        const value = (model.color.oklab.l * 100).toFixed(2)
+        const result = parseFloat(value)
+        return `L* ${result}`
+    }
+
+    if (delegate.contrast === "CAM16") {
+        const value = model.color.cam16_jmh.j.toFixed(2)
+        const result = parseFloat(value)
+        return `L* ${result}`
+    }
+
 }
 
 const Wrapper = styled.div`

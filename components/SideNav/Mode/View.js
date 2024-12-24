@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useMantineColorScheme, Select, Space } from '@mantine/core';
-import { Edit } from 'feather-icons-react';
 import { IconPencil } from "@tabler/icons-react";
 import { optimizations } from '../../../models/OptimizationModel'
 
@@ -38,7 +37,7 @@ export default function Main(props) {
             label = "Contrast"
             value = {props.delegate.contrast}
             placeholder = "Pick Swatch Contrast"
-            data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
+            data = {['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16']}
             onChange={onChangeContrastHandler}
         />
         <Space h="36" />
