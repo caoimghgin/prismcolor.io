@@ -23,9 +23,9 @@ export default function NavBarMenu() {
                 PrismColor.io Importer (Code)
                 </Menu.Item>
 
-                <Menu.Label>Learning</Menu.Label>
+                <Menu.Label>Education</Menu.Label>
                 <Menu.Item leftSection={<IconBrandYoutube style={{ width: 18, height: 18 }} />} onClick={() => windowOpen('https://uxdesign.cc/applying-game-design-logic-to-your-design-system-111a2116509')}>
-                    PrismColor.io Videos
+                    Training Videos
                 </Menu.Item>
 
                 <Menu.Item leftSection={<IconBrandMedium style={{ width: 18, height: 18 }} />} onClick={() => windowOpen('https://medium.com/user-experience-design-1/the-genome-color-tool-28ce73b20768?sk=4a0dbd24196ff92dcec52ca8f6fce7f6')}>

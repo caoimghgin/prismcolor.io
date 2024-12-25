@@ -38,7 +38,7 @@ const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode:
     if (!model) return
     return (
         <Wrapper>
-            <NavBar />
+            <NavBar model={model} delegate={delegate}/>
             <Main>
                 <Left>
                     <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
