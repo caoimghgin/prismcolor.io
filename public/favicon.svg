@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1772.6 1568.3">
-  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2111.29 1938.69">
   <defs>
     <style>
-      .st0 {
-        fill: #16caed;
+      .cls-1 {
+        fill: url(#linear-gradient);
+        stroke: #fff;
+        stroke-miterlimit: 10;
       }
 
-      .st1 {
-        fill: #074aea;
-      }
-
-      .st2 {
-        fill: #03a;
+      .cls-2 {
+        fill: #fff;
       }
     </style>
+    <linearGradient id="linear-gradient" x1="43.65" y1="-42.65" x2="2067.64" y2="1981.34" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#06d0f1"/>
+      <stop offset=".55" stop-color="#0554f1"/>
+      <stop offset="1" stop-color="#013ab7"/>
+    </linearGradient>
   </defs>
-  <polygon class="st0" points="619.2 1130.1 619.2 1130.1 619.2 1130.1 262.2 1130.1 21.2 1547.6 914.1 1547.6 1092.3 1239 1092.3 1239 556.4 1239 619.2 1130.1"/>
-  <polygon class="st1" points="950.1 774.9 1128.6 465.7 887.2 47.6 440.7 821 619.2 1130.1 619.2 1130.1 887.2 666 950.1 774.9 950.1 774.9"/>
-  <polygon class="st2" points="1307.1 774.9 950.1 774.9 950.1 774.9 950.1 774.9 1218 1239 1092.3 1239 1092.3 1239 1270.5 1547.6 1753.2 1547.6 1307.1 774.9"/>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <rect class="cls-1" x=".5" y=".5" width="2110.29" height="1937.69"/>
+    <polygon class="cls-2" points="1485.31 1402.37 1290.85 1402.37 1435.09 1652.2 1917.82 1652.2 1471.67 879.44 1183.4 879.44 1485.31 1402.37"/>
+    <polygon class="cls-2" points="749.46 1175.17 1051.8 651.5 1149.03 819.91 1293.16 570.26 1051.8 152.2 605.32 925.52 749.46 1175.17"/>
+    <polygon class="cls-2" points="715.08 1234.7 426.82 1234.7 185.77 1652.2 1078.72 1652.2 1222.96 1402.37 618.28 1402.37 715.08 1234.7"/>
+  </g>
 </svg>
