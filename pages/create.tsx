@@ -30,18 +30,18 @@ export default function Create() {
         setModel(new PaletteModel(data))
     }, [data])
 
-    return render(model, delegate, setDelegate, mode, setMode)
+    return render(model, setModel, delegate, setDelegate, mode, setMode)
 
 }
 
-const render = (model: any, delegate: any, setDelegate: any, mode: any, setMode: any) => {
+const render = (model: any, setModel: any, delegate: any, setDelegate: any, mode: any, setMode: any) => {
     if (!model) return
     return (
         <Wrapper>
             <NavBar model={model} delegate={delegate}/>
             <Main>
                 <Left>
-                    <SideNav model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
+                    <SideNav model={model} setModel={setModel} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/>
                 </Left>
                 <Right>
                     <PaletteView model={model} delegate={delegate} mode={mode} />

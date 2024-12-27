@@ -4,7 +4,7 @@ import ViewMode from "./Mode/View.js"
 import EditMode from "./Mode/Edit.js"
 
 export default function SideNav(props) {
-    const { model, delegate, setDelegate, mode, setMode } = props
+    const { model, setModel, delegate, setDelegate, mode, setMode } = props
 
     if (!props.delegate.editing) {
         return ( <Wrapper><ViewMode model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/></Wrapper> )

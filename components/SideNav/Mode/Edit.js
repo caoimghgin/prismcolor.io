@@ -1,17 +1,23 @@
 import styled from "styled-components";
-import { useState } from "react"
-import { useMantineColorScheme, Select, Space } from '@mantine/core';
+import { useState, useEffect } from "react"
+import { useMantineColorScheme, Select, Space, TextInput, Button } from '@mantine/core';
 import { Edit, Save } from 'feather-icons-react';
 import { optimizations } from '../../../models/OptimizationModel'
 
 export default function Main(props) {
     const { setColorScheme } = useMantineColorScheme();
+    const [value, setValue] = useState(props.delegate.editing.semantic);
 
-    const onChangeContrastHandler = (contrast) => {
-        const result = {...props.delegate, contrast: contrast}
-        props.setDelegate(result)
-        console.log(result)
-    }
+    useEffect(() => {
+        console.log(value, '- Has changed')
+        console.log(props.model)
+        console.log(props.delegate.editing)
+        props.model.columns[props.delegate.editing.id].semantic = value
+
+        const newModel = props.model
+
+
+    },[value]) // <-- here put the parameter to listen, react will re-render component when your state will be changed
 
     const onChangeOptimizationHandler = (optimization) => {
         const result = {...props.delegate, optimization: optimization}
@@ -43,14 +49,20 @@ export default function Main(props) {
             onChange={onChangeContrastHandler}
         />
         */}
+
         <>
-            <Chip onClick={onClick}>
+            <Chip>
                 <ChipGradientSwatch model={props.delegate.editing}/>
-                {props.delegate.editing.semantic}
-                <Icon><Save size={18}/></Icon>
+                <TextInput
+                    value={value}
+                    onChange={(event) => setValue(event.currentTarget.value)}
+                    size="xsm"
+                />
             </Chip>
             <Space h="sm" />
         </>
+        <Button size="xs" color="#0070c1" onClick={() => onClick()}>Save</Button>
+
         </>
       );
 }
