@@ -1,69 +1,87 @@
-import Swatch from "./Swatch"
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
+import { optimizations } from '../../models/OptimizationModel.js';
+import Swatch from './Swatch';
 
 const AnimationVariants = {
-    initial: {
-        scale: 0.75,
-        y: 50
-    },
-    animate: (index) => ({ 
-        scale: 1,
-        y: 0,
-        transition: {
-            duration: 0.05 * index,
-            type: 'spring' 
-        }
-    })
-}
+  animateIn: {
+    scale: 1,
+    y: 0,
+  },
+  animateOut: {
+    scale: 0,
+    y: 50,
+  },
+  noAnimation: {},
+};
 
 export default function SwatchGroupView(props) {
-    const [key, setKey] = useState(0);
+  if (!props.model) return null;
 
-    useEffect(() => {
-        setKey(prevKey => prevKey + 1);
-    }, [props.delegate]);
+  const optimization = optimizations.find((item) => item.name === props.delegate.optimization);
 
-    if (!props.model) return
-    return (
-        <Container>
-            <Title>{props.model.semantic}</Title>
-            <Main className="ScaleView">
-                {props.model.swatches.map((model, index) => {
-                    return (
-                        <motion.div
-                            key={`${key}-${index}`}
-                            variants={AnimationVariants}
-                            initial="initial"
-                            animate="animate"
-                            custom={index}
-                        >
-                            <Swatch model={model} delegate={props.delegate} />
-                        </motion.div>
-                    );
-                })}
-            </Main>
-        </Container>
-    )
+  // Ref to store the previous optimization object
+  const previousOptimization = useRef(null);
+
+  useEffect(() => {
+    if (previousOptimization.current && previousOptimization.current.name !== optimization?.name) {
+      console.log(
+        'Optimization changed from',
+        previousOptimization.current.name,
+        'to',
+        optimization?.name
+      );
+    }
+
+    previousOptimization.current = optimization; // Update the ref after comparison
+  }, [optimization]);
+
+  return (
+    <Container>
+      <Title>{props.model.semantic}</Title>
+      <Main className="ScaleView">
+        {props.model.swatches.map((model, index) => {
+          // Compare weights for the current index
+          const previousWeight = previousOptimization.current?.values[index]?.weight;
+          const currentWeight = optimization?.values[index]?.weight;
+
+          // Determine the correct animation
+          const animate = !previousOptimization.current
+            ? AnimationVariants.noAnimation
+            : previousWeight === undefined && currentWeight !== undefined
+              ? AnimationVariants.animateIn
+              : previousWeight !== undefined && currentWeight === undefined
+                ? AnimationVariants.animateOut
+                : AnimationVariants.noAnimation;
+
+          return (
+            <motion.div key={index} animate={animate} variants={AnimationVariants} custom={index}>
+              <Swatch model={model} delegate={props.delegate} />
+            </motion.div>
+          );
+        })}
+      </Main>
+    </Container>
+  );
 }
 
 const Container = styled.div`
-    margin: 16px;
-    display: flex;
-    `
+  margin: 16px;
+  display: flex;
+`;
 
 const Title = styled.div`
   flex: 0 0 100px;
-    padding-top: 18px;
-    font-weight: bold;
-    font-size: 12px;
-    `
+  padding-top: 18px;
+  font-weight: bold;
+  font-size: 12px;
+`;
 
 const Main = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%
-    flex: 1;
-    background: white;
-    `
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  flex: 1;
+  background: white;
+`;
