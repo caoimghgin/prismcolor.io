@@ -30,16 +30,16 @@ export default function Main(props) {
         const model = new PaletteModel(data)
         console.log(model)
         console.log("editing ->", editing)
-        console.log("REPLACE WITH NEW =>", model.columns[0])
-        setEditing(model.columns[0])
-        props.model.columns[editing.id] = model.columns[0]
+        console.log("REPLACE WITH NEW =>", model.scales[0])
+        setEditing(model.scales[0])
+        props.model.scales[editing.id] = model.scales[0]
 
     },[anchorValue])
 
     useEffect(() => {
         const anchor = editing.swatches.find(item => item.isAnchor)
         console.log("->", anchor)
-        props.model.columns[editing.id].semantic = value
+        props.model.scales[editing.id].semantic = value
         const newModel = props.model
     },[value])
 

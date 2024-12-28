@@ -2,7 +2,7 @@ import ColumnModel from "./ColumnModel";
 
 export default class PaletteModel {
 
-    columns = []
+    scales = []
 
     constructor(props) {
         if (!Array.isArray(props)) return
@@ -10,7 +10,7 @@ export default class PaletteModel {
             const semantic = prop.semantic
             const keys = prop.keys
             const model = new ColumnModel(index, semantic, keys)
-            this.columns.push(model);
+            this.scales.push(model);
         })
     }
 

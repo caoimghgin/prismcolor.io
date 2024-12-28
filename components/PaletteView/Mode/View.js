@@ -5,7 +5,7 @@ export default function Main(props) {
     if (!props) return
     return (
         <Wrapper>
-            {props.model.columns.map((column, index) =>
+            {props.model.scales.map((column, index) =>
                 <SwatchGroup key={index} model={column} delegate={props.delegate} />
             )}
         </Wrapper>
