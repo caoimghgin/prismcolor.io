@@ -1,5 +1,3 @@
-import Color from 'colorjs.io';
-
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { Anchor, Key, Lock, AlertTriangle } from 'feather-icons-react';

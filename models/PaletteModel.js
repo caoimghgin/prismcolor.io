@@ -4,17 +4,14 @@ export default class PaletteModel {
 
     columns = []
 
-    constructor(args) {
-        if (!Array.isArray(args)) return
-
-        args.forEach((arg, index) => {
-            this.columns.push(new ColumnModel(index, arg.semantic, arg.keys));
+    constructor(props) {
+        if (!Array.isArray(props)) return
+        props.forEach((prop, index) => {
+            const semantic = prop.semantic
+            const keys = prop.keys
+            const model = new ColumnModel(index, semantic, keys)
+            this.columns.push(model);
         })
-
-        // window.addEventListener('EXPORT_DATA', (e) => {
-        //     console.log(this.columns)
-        // });
-
     }
 
 }

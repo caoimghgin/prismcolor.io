@@ -1,23 +1,47 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react"
-import { useMantineColorScheme, Select, Space, TextInput, Button } from '@mantine/core';
-import { Edit, Save } from 'feather-icons-react';
+import { useMantineColorScheme, Select, Space, TextInput, Button, ColorInput } from '@mantine/core';
 import { optimizations } from '../../../models/OptimizationModel'
+import { Anchor, Key, Lock, AlertTriangle } from 'feather-icons-react';
+import ColumnModel from "@/models/ColumnModel";
+import PaletteModel from "@/models/PaletteModel";
 
 export default function Main(props) {
+
     const { setColorScheme } = useMantineColorScheme();
     const [value, setValue] = useState(props.delegate.editing.semantic);
+    const [anchorValue, setAnchorValue] = useState(props.delegate.editing.swatches.find(item => item.isAnchor).hex);
+    const [editing, setEditing] = useState(props.delegate.editing)
 
     useEffect(() => {
-        console.log(value, '- Has changed')
-        console.log(props.model)
-        console.log(props.delegate.editing)
-        props.model.columns[props.delegate.editing.id].semantic = value
+        if (!anchorValue) return
 
+        const data = [
+            { index: 1, semantic: "primary", keys: [ anchorValue  ] },
+            { index: 2, semantic: "secondary", keys: ["#007c00"] },
+            { index: 3, semantic: "positive", keys: ["#007c00"]},
+            { index: 4, semantic: "negative", keys: ["#007c00"]},
+            { index: 5, semantic: "highlight", keys: ["#007c00"]},
+            { index: 6, semantic: "info", keys: ["#007c00"] },
+            { index: 7, semantic: "system", keys: ["#007c00"]},
+            { index: 8, semantic: "neutral", keys: null },
+        ]
+
+        const model = new PaletteModel(data)
+        console.log(model)
+        console.log("editing ->", editing)
+        console.log("REPLACE WITH NEW =>", model.columns[0])
+        setEditing(model.columns[0])
+        props.model.columns[editing.id] = model.columns[0]
+
+    },[anchorValue])
+
+    useEffect(() => {
+        const anchor = editing.swatches.find(item => item.isAnchor)
+        console.log("->", anchor)
+        props.model.columns[editing.id].semantic = value
         const newModel = props.model
-
-
-    },[value]) // <-- here put the parameter to listen, react will re-render component when your state will be changed
+    },[value])
 
     const onChangeOptimizationHandler = (optimization) => {
         const result = {...props.delegate, optimization: optimization}
@@ -38,21 +62,9 @@ export default function Main(props) {
             onChange={onChangeOptimizationHandler}
         />
         <Space h={36} /> 
-
-        {/* 
-        <Space h="8" />
-        <Select
-            label = "Contrast"
-            value = {props.delegate.contrast}
-            placeholder = "Pick Swatch Contrast"
-            data = {['WCAG21', 'APCA', 'CIE L* (d65)']}
-            onChange={onChangeContrastHandler}
-        />
-        */}
-
         <>
             <Chip>
-                <ChipGradientSwatch model={props.delegate.editing}/>
+                <ChipGradientSwatch model={editing}/>
                 <TextInput
                     value={value}
                     onChange={(event) => setValue(event.currentTarget.value)}
@@ -60,9 +72,17 @@ export default function Main(props) {
                 />
             </Chip>
             <Space h="sm" />
-        </>
-        <Button size="xs" color="#0070c1" onClick={() => onClick()}>Save</Button>
 
+            <ColorInput
+        defaultValue={anchorValue ? anchorValue : ""}
+        onChangeEnd={setAnchorValue}
+      />
+
+            <Space h="sm" />
+
+        </> 
+        <Space h="sm" />
+        <Button size="xs" color="#0070c1" onClick={() => onClick()}>Save</Button>
         </>
       );
 }

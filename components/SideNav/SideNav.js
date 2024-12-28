@@ -9,7 +9,7 @@ export default function SideNav(props) {
     if (!props.delegate.editing) {
         return ( <Wrapper><ViewMode model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/></Wrapper> )
     }
-    return ( <Wrapper><EditMode model={model} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/></Wrapper> )
+    return ( <Wrapper><EditMode model={model} setModel={setModel} delegate={delegate} setDelegate={setDelegate} mode={mode} setMode={setMode}/></Wrapper> )
 
 }
 
