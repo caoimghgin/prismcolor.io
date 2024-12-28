@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 export default function SwatchGroupView(props) {
     if (!props.model) return
+    
     return (
         <Container>
             <Main className="ScaleView">
                 {props.model.swatches.map((model, index) => {
                     return <Scale key={index} model={model} delegate={props.delegate} />
                 })}
-        </Main>
+            </Main>
         </Container>
     )
 }

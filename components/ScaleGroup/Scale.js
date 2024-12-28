@@ -10,7 +10,7 @@ export default function SwatchView(props) {
 
     useEffect(() => {
         if (!props.model || !props.delegate) return
-        setModel({ ...props.model, delegate: props.delegate })
+        setModel({ ...props.model, delegate: props.delegate.editing })
     }, [props.model, props.delegate])
 
     const onClickHandler = () => {
@@ -94,25 +94,6 @@ const getSymbols = (model) => {
     return null
 }
 
-const contrastLabel = (model, delegate) => {
-    if (delegate.contrast === "WCAG21") {
-        const value = model.wcag_white.toFixed(2)
-        const result = parseFloat(value)
-        return `${result}:1`
-    }
-    if (delegate.contrast === "CIE L* (d65)") {
-        const value = model.lab_d65_l.toFixed(2)
-        const result = parseFloat(value)
-        return `L* ${result}`
-    }
-    if (delegate.contrast === "APCA") {
-        const white = Math.abs(model.apca_white);
-        const black = Math.abs(model.apca_black);
-        if (white > black) return `Lc ${model.apca_white.toFixed(2)}`
-        return `Lc ${model.apca_black.toFixed(2)}`
-    }
-}
-
 const Wrapper = styled.div`
 font-size: 11px;
 font-weight: 600;
@@ -155,18 +136,13 @@ height: 72px;
 min-height: 72px;
 background: ${props => props.optimizedWeight || props.model.lock ? props.model.value.destination : props.model.value.destination};
 color: ${props => swatchFrgColor(props)};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-// border-radius: 8px;
-// margin: 0px 16px 8px 0px;
+display: flex;
+align-items: center;
+justify-content: center;
 border: ${props => props.model.lab_d65_l > 99 ? "1px solid #f1f1f1" : null};
-// `;
+`;
 
 const swatchFrgColor = (props) => {
-
-    // if (!props.optimizedWeight) return 'white'
-
     if (props.delegate.contrast === "WCAG21") {
         return props.model.lab_d65_l < 50 ? "white" : "black"
     }

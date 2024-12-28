@@ -7,7 +7,7 @@ import PaletteView from "@/components/PaletteView/PaletteView";
 
 export default function Create() {
 
-    const [delegate, setDelegate] = useState({ optimization: "Universal", contrast: "CIE L* (d65)" });
+    const [delegate, setDelegate] = useState({ optimization: "Universal", contrast: "CIE L* (d65)", editing: null });
     const [data, setData] = useState<SemanticPaletteScale[]>();
     const [model, setModel] = useState<any>();
     const [mode, setMode] = useState("Palette");
