@@ -8,7 +8,7 @@ export default class ColumnModel {
     semantic = null
     swatches = []
     stepsDeltaE = 0.50
-    tweenColorModel = "oklch"
+    tweenSpace = "oklch"
 
     constructor(index, semantic, values) {
 
@@ -67,12 +67,11 @@ export default class ColumnModel {
         const tween = this.swatches.filter(swatch => swatch);
 
         for (let i = 0; i + 1 < tween.length; i++) {
-
             const start = tween[i].color;
             const stop = tween[i + 1].color;
-            const range = ColorModel.range(start, stop, { space: this.tweenColorModel, outputSpace: this.tweenColorModel });
+            const range = ColorModel.range(start, stop, { space: this.tweenSpace, outputSpace: this.tweenSpace });
             const steps = ColorModel.steps(range, { maxDeltaE: this.stepsDeltaE });
-            steps.forEach(item => candidateSwatches.push(new ColorModel(this.tweenColorModel, item.coords)));
+            steps.forEach(item => candidateSwatches.push(new ColorModel(this.tweenSpace, item.coords)));
         }
 
         this.swatches.forEach((swatch, idx) => {

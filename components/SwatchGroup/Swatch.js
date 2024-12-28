@@ -1,3 +1,5 @@
+import Color from 'colorjs.io';
+
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { Anchor, Key, Lock, AlertTriangle } from 'feather-icons-react';
@@ -83,6 +85,12 @@ const contrastLabel = (model, delegate) => {
         const value = model.color.cam16_jmh.j.toFixed(2)
         const result = parseFloat(value)
         return `L* ${result}`
+    }
+
+    if (delegate.contrast === "HCT T%") {
+        const value = model.color.hct.t.toFixed(2)
+        const result = parseFloat(value)
+        return `T% ${result}`
     }
 
 }

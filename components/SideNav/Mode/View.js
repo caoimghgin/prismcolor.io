@@ -37,7 +37,7 @@ export default function Main(props) {
             label = "Contrast"
             value = {props.delegate.contrast}
             placeholder = "Pick Swatch Contrast"
-            data = {['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16']}
+            data = {['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16', 'HCT T%']}
             onChange={onChangeContrastHandler}
         />
         <Space h="36" />
