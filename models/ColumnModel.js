@@ -75,7 +75,10 @@ export default class ColumnModel {
             const stop = tween[i + 1].color;
             const range = ColorModel.range(start, stop, { space: this.tweenSpace, outputSpace: this.tweenSpace });
             const steps = ColorModel.steps(range, { maxDeltaE: this.stepsDeltaE });
-            steps.forEach(item => candidateSwatches.push(new ColorModel(this.tweenSpace, item.coords)));
+            steps.forEach(item => {
+                const color = new ColorModel(this.tweenSpace, item.coords)
+                candidateSwatches.push(color)
+            });
         }
 
         this.swatches.forEach((swatch, idx) => {
