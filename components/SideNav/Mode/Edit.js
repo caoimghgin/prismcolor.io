@@ -1,90 +1,64 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react"
-import { useMantineColorScheme, Select, Space, TextInput, Button, ColorInput } from '@mantine/core';
+import { Select, Space, TextInput, Button, ColorInput } from '@mantine/core';
 import { optimizations } from '../../../models/OptimizationModel'
-import { Anchor, Key, Lock, AlertTriangle } from 'feather-icons-react';
 import ColumnModel from "@/models/ColumnModel";
-import PaletteModel from "@/models/PaletteModel";
 
 export default function Main(props) {
 
-    const { setColorScheme } = useMantineColorScheme();
     const [value, setValue] = useState(props.delegate.editing.semantic);
     const [anchorValue, setAnchorValue] = useState(props.delegate.editing.swatches.find(item => item.isAnchor).hex);
     const [editing, setEditing] = useState(props.delegate.editing)
 
     useEffect(() => {
         if (!anchorValue) return
-
-        const data = [
-            { index: 1, semantic: "primary", keys: [ anchorValue  ] },
-            { index: 2, semantic: "secondary", keys: ["#007c00"] },
-            { index: 3, semantic: "positive", keys: ["#007c00"]},
-            { index: 4, semantic: "negative", keys: ["#007c00"]},
-            { index: 5, semantic: "highlight", keys: ["#007c00"]},
-            { index: 6, semantic: "info", keys: ["#007c00"] },
-            { index: 7, semantic: "system", keys: ["#007c00"]},
-            { index: 8, semantic: "neutral", keys: null },
-        ]
-
-        const model = new PaletteModel(data)
-        console.log(model)
-        console.log("editing ->", editing)
-        console.log("REPLACE WITH NEW =>", model.scales[0])
-        setEditing(model.scales[0])
-        props.model.scales[editing.id] = model.scales[0]
-
-    },[anchorValue])
+        const newSet = new ColumnModel(editing.id, editing.semantic, [anchorValue])
+        setEditing(newSet)
+        props.setDelegate({ ...props.delegate, editing: newSet })
+        props.model.scales[editing.id] = newSet
+    }, [anchorValue])
 
     useEffect(() => {
         const anchor = editing.swatches.find(item => item.isAnchor)
-        console.log("->", anchor)
         props.model.scales[editing.id].semantic = value
-        const newModel = props.model
-    },[value])
+    }, [value])
 
     const onChangeOptimizationHandler = (optimization) => {
-        const result = {...props.delegate, optimization: optimization}
+        const result = { ...props.delegate, optimization: optimization }
         props.setDelegate(result)
-        console.log(result)
     }
 
     const onClick = (event) => {
-        props.setDelegate({...props.delegate, editing: null})
+        props.setDelegate({ ...props.delegate, editing: null })
     }
 
     return (
         <>
-        <Select
-            label = "Optimization"
-            value = {props.delegate.optimization}
-            data = {optimizations.map(item => item.name)}
-            onChange={onChangeOptimizationHandler}
-        />
-        <Space h={36} /> 
-        <>
-            <Chip>
-                <ChipGradientSwatch model={editing}/>
-                <TextInput
-                    value={value}
-                    onChange={(event) => setValue(event.currentTarget.value)}
-                    size="xsm"
-                />
-            </Chip>
+            <Select 
+                label="Optimization" 
+                value={props.delegate.optimization} 
+                data={optimizations.map(item => item.name)}
+                onChange={onChangeOptimizationHandler}
+            />
+            <Space h={36} />
+            <>
+                <Chip>
+                    <ChipGradientSwatch model={editing} />
+                    <TextInput value={value} onChange={(event) => setValue(event.currentTarget.value)}
+                        size="xsm"
+                    />
+                </Chip>
+                <Space h="sm" />
+
+                <ColorInput defaultValue={anchorValue ? anchorValue : ""} onChangeEnd={setAnchorValue} />
+
+                <Space h="sm" />
+
+            </>
             <Space h="sm" />
-
-            <ColorInput
-        defaultValue={anchorValue ? anchorValue : ""}
-        onChangeEnd={setAnchorValue}
-      />
-
-            <Space h="sm" />
-
-        </> 
-        <Space h="sm" />
-        <Button size="xs" color="#0070c1" onClick={() => onClick()}>Save</Button>
+            <Button size="xs" color="#0070c1" onClick={() => onClick()}>Save</Button>
         </>
-      );
+    );
 }
 
 const Icon = styled.div`
@@ -135,13 +109,5 @@ const Chip = styled.div`
     font-size: 13px;
     font-weight: 600;
     padding-right: 16px;
-      cursor: pointer;
-
+    cursor: pointer;
 `;
-
-const swatchDisplayOptions = [
-    { value: 'none', label: 'NONE' },
-    { value: 'ciel*d65', label: 'CIE L* (d65)' },
-    { value: 'apcalc_white', label: 'APCA' },
-    { value: 'wcag21', label: 'WCAG21' },
-];

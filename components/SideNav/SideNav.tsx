@@ -1,9 +1,18 @@
 import styled from "styled-components";
-
 import ViewMode from "./Mode/View.js"
 import EditMode from "./Mode/Edit.js"
 
-export default function SideNav(props) {
+interface Props {
+    model: any, 
+    setModel: any, 
+    delegate: any, 
+    setDelegate: any, 
+    mode: any, 
+    setMode: any 
+}
+
+export default function SideNav(props: Props) {
+    
     const { model, setModel, delegate, setDelegate, mode, setMode } = props
 
     if (!props.delegate.editing) {

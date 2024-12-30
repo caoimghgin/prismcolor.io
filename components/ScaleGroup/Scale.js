@@ -14,10 +14,7 @@ export default function SwatchView(props) {
     }, [props.model, props.delegate])
 
     const onClickHandler = () => {
-        console.log(optimizations)
         console.table(model)
-        console.log(model.color)
-        console.log("AM I IN GAMUT of sRGB?", model.color.inGamut("srgb"))     
         navigator.clipboard.writeText(model.hex)
     }
     return render(model, props.delegate, onClickHandler)

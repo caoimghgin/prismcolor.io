@@ -9,19 +9,16 @@ export default function Main(props) {
     const onChangeContrastHandler = (contrast) => {
         const result = {...props.delegate, contrast: contrast}
         props.setDelegate(result)
-        console.log(result)
     }
 
     const onChangeOptimizationHandler = (optimization) => {
         const result = {...props.delegate, optimization: optimization}
         props.setDelegate(result)
-        console.log(result)
     }
 
     const onClick = (value) => {
         const result = {...props.delegate, editing: value}
         props.setDelegate(result)
-        console.log(result)
     }
 
     return (

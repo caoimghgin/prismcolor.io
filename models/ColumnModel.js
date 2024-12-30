@@ -22,11 +22,9 @@ export default class ColumnModel {
 
             if (typeof values[0] === 'string' || values[0] instanceof String) {
                 values = values.map(value => new ColorModel(value))
-            } else {
-                console.log("SOMETHING WRONG?",  values[0] )
-            }
+            } 
 
-            console.log(values)
+            // console.log(values)
 
             if (values.length) this.destinationSpace = values && values.length ? values[0].space.id : null
 
