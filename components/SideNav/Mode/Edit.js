@@ -50,7 +50,7 @@ export default function Main(props) {
                 </Chip>
                 <Space h="sm" />
 
-                <ColorInput defaultValue={anchorValue ? anchorValue : ""} onChangeEnd={setAnchorValue} />
+                <ColorInput defaultValue={anchorValue ? anchorValue : ""} onChange={setAnchorValue} />
 
                 <Space h="sm" />
 
