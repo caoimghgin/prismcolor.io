@@ -105,15 +105,3 @@ const Chip = styled.div`
       cursor: pointer;
 
 `;
-
-const Wrapper = styled.div`
-    padding: 16px;
-`;
-
-
-const swatchDisplayOptions = [
-    { value: 'none', label: 'NONE' },
-    { value: 'ciel*d65', label: 'CIE L* (d65)' },
-    { value: 'apcalc_white', label: 'APCA' },
-    { value: 'wcag21', label: 'WCAG21' },
-];

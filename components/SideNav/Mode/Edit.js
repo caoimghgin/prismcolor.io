@@ -61,11 +61,6 @@ export default function Main(props) {
     );
 }
 
-const Icon = styled.div`
-margin-left: auto; 
-margin-right: 0;
-`
-
 const ChipGradientSwatch = styled.div`
     height:64px;
     width:64px;

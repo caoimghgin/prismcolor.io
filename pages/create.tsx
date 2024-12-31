@@ -45,11 +45,12 @@ export default function Create() {
 const Left = styled.div`
   flex: 0 0 280px;
   border-right: 1px solid #e3e3e3;
-  background: #f1f1f1;
+    background: #f7f7f7;
 `
 
 const Right = styled.div`
-    background: #f7f7f7;
+      background: #f1f1f1;
+
     flex-grow: 1;
 `
 
