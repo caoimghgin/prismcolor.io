@@ -6,15 +6,15 @@ import Swatch from './Swatch';
 const AnimationVariants = {
   initial: {
     scale: 0,
-    y: 50,
+    opacity: 0,
   },
   animateIn: {
-    scale: 1,
-    y: 0,
+    scale: [0, 0.9, 1],
+    opacity: [0, 0.5, 1],
   },
   animateOut: {
-    scale: 0,
-    y: 50,
+    scale: [1, 0.9, 0],
+    opacity: [1, 0.5, 0],
   },
 };
 
@@ -31,7 +31,7 @@ export default function SwatchGroupView(props) {
           const currentWeight = optimization?.values[index]?.weight;
 
           return (
-            <AnimatePresence initial={false}>
+            <AnimatePresence initial={false} mode="sync">
               {currentWeight && (
                 <motion.div
                   key={index}
