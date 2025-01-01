@@ -9,12 +9,14 @@ const AnimationVariants = {
     opacity: 0,
   },
   animateIn: {
-    scale: [0, 0.9, 1],
+    scale: [0, 0.1, 1],
     opacity: [0, 0.5, 1],
+    type: 'tween',
   },
   animateOut: {
     scale: [1, 0.9, 0],
     opacity: [1, 0.5, 0],
+    type: 'tween',
   },
 };
 
