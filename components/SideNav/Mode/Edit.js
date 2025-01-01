@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react"
-import { Select, Space, TextInput, Button, ColorInput } from '@mantine/core';
+import { Select, Space, TextInput, Button, ColorInput, Divider } from '@mantine/core';
 import { optimizations } from '../../../models/OptimizationModel'
 import ColumnModel from "@/models/ColumnModel";
 
@@ -15,7 +15,6 @@ export default function Main(props) {
         const newSet = new ColumnModel(editing.id, editing.semantic, [anchorValue])
         setEditing(newSet)
         props.setDelegate({ ...props.delegate, editing: newSet })
-        props.model.scales[editing.id] = newSet
     }, [anchorValue])
 
     useEffect(() => {
@@ -28,15 +27,25 @@ export default function Main(props) {
         props.setDelegate(result)
     }
 
-    const onClick = (event) => {
+    const onSave = (event) => {
+        props.model.scales[editing.id] = editing
+        props.setDelegate({ ...props.delegate, editing: null })
+    }
+
+    const onCancel = (event) => {
         props.setDelegate({ ...props.delegate, editing: null })
     }
 
     return (
         <>
-            <Select 
-                label="Optimization" 
-                value={props.delegate.optimization} 
+            <Button size="xs" color="#0070c1" onClick={() => onSave()}>Save</Button>
+            <Button ml="sm" variant="default" size="xs" color="#0070c1" onClick={() => onCancel()}>Cancel</Button>
+            <Divider my="md" />
+            <Space h={5} />
+
+            <Select
+                label="Optimization"
+                value={props.delegate.optimization}
                 data={optimizations.map(item => item.name)}
                 onChange={onChangeOptimizationHandler}
             />
@@ -56,7 +65,6 @@ export default function Main(props) {
 
             </>
             <Space h="sm" />
-            <Button size="xs" color="#0070c1" onClick={() => onClick()}>Save</Button>
         </>
     );
 }
@@ -66,7 +74,7 @@ const ChipGradientSwatch = styled.div`
     width:64px;
     margin-right: 8px;
     border-radius: 8px 0px 0px 8px;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #d4d4d4;
     background-image: linear-gradient(-45deg,  
     ${props => props.model.swatches[22].hex}, 
     ${props => props.model.swatches[21].hex}, 
@@ -98,7 +106,7 @@ const Chip = styled.div`
     width:100%;
     background-color: #ffffff;
     border-radius: 8px;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #d4d4d4;
     display: flex;
     align-items: center;
     font-size: 13px;

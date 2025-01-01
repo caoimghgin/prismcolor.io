@@ -34,7 +34,7 @@ const Container = styled.div`
     align-items: center;
     background-color: #ffffff;
     border-radius: 8px;
-    border: 1px solid #e3e3e3;
+    border: 1px solid #d4d4d4;
 `
 
 const Wrapper = styled.div`
