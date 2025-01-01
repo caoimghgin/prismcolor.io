@@ -143,6 +143,35 @@ const ibmCarbon = Object.freeze({
     ],
 });
 
+const materialDesign3 = Object.freeze({
+    name: "Material Design (M3)",
+    values: [
+        { target: 100, univers: 0, weight: "100" },
+        { target: 97.5, univers: 25, weight: "98" },
+        { target: 95, univers: 50, weight: "95" },
+        { target: 93.5, univers: 75, weight: undefined },
+        { target: 90, univers: 100, weight: "90" },
+        { target: 85, univers: 150, weight: undefined },
+        { target: 80, univers: 200, weight: "80" },
+        { target: 75, univers: 250, weight: undefined },
+        { target: 70, univers: 300, weight: "70" },
+        { target: 65, univers: 350, weight: undefined },
+        { target: 60, univers: 400, weight: "60" },
+        { target: 55, univers: 450, weight: undefined },
+        { target: 50, univers: 500, weight: "50" },
+        { target: 45, univers: 550, weight: undefined },
+        { target: 40, univers: 600, weight: "40" },
+        { target: 35, univers: 650, weight: "35" },
+        { target: 30, univers: 700, weight: "30" },
+        { target: 25, univers: 750, weight: "25" },
+        { target: 20, univers: 800, weight: "20" },
+        { target: 15, univers: 850, weight: "15" },
+        { target: 10, univers: 900, weight: "10" },
+        { target: 5, univers: 950, weight: "5" },
+        { target: 0, univers: 999, weight: "0" },
+    ],
+});
+
 const saleforceLightning = Object.freeze({
     name: "Saleforce Lightning",
     values: [
@@ -259,6 +288,5 @@ const colorBox = Object.freeze({
     ],
 });
 
-export const optimizations = [universal, genome, materialDesign, adobeSpectrum, ibmCarbon, saleforceLightning, antDesign, accessiblePalette, colorBox]
-// export const optimizations = Object.freeze([universal, genome])
+export const optimizations = [universal, genome, materialDesign, materialDesign3, adobeSpectrum, ibmCarbon, saleforceLightning, antDesign, accessiblePalette, colorBox]
 
