@@ -1,14 +1,26 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react"
 import { Select, Space, TextInput, Button, ColorInput, Divider } from '@mantine/core';
-import { optimizations } from '../../../models/OptimizationModel'
+import { optimizations } from '@/models/OptimizationModel'
 import ColumnModel from "@/models/ColumnModel";
 
 export default function Main(props) {
 
-    const [value, setValue] = useState(props.delegate.editing.semantic);
-    const [anchorValue, setAnchorValue] = useState(props.delegate.editing.swatches.find(item => item.isAnchor).hex);
-    const [editing, setEditing] = useState(props.delegate.editing)
+    const [value, setValue] = useState();
+    const [anchor, setAnchor]  = useState();
+    const [anchorValue, setAnchorValue] = useState();
+    const [editing, setEditing] = useState();
+
+    useEffect(() => {
+        setEditing(props.delegate.editing)
+        setValue(props.delegate.editing.semantic)
+        setAnchor(props.delegate.editing.swatches.find(item => item.isAnchor))
+    }, [])
+
+    useEffect(() => {
+        if (!anchor) return
+        if (anchor) setAnchorValue(anchor.hex)
+    }, [anchor])
 
     useEffect(() => {
         if (!anchorValue) return
@@ -18,7 +30,7 @@ export default function Main(props) {
     }, [anchorValue])
 
     useEffect(() => {
-        const anchor = editing.swatches.find(item => item.isAnchor)
+        if (!editing) return
         props.model.scales[editing.id].semantic = value
     }, [value])
 
@@ -28,6 +40,7 @@ export default function Main(props) {
     }
 
     const onSave = (event) => {
+        if (!editing) return
         props.model.scales[editing.id] = editing
         props.setDelegate({ ...props.delegate, editing: null })
     }
@@ -36,6 +49,7 @@ export default function Main(props) {
         props.setDelegate({ ...props.delegate, editing: null })
     }
 
+    if (!editing) return
     return (
         <>
             <Button size="xs" color="#0070c1" onClick={() => onSave()}>Save</Button>
@@ -59,7 +73,7 @@ export default function Main(props) {
                 </Chip>
                 <Space h="sm" />
 
-                <ColorInput defaultValue={anchorValue ? anchorValue : ""} onChange={setAnchorValue} />
+                {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={setAnchorValue} /> : null }
 
                 <Space h="sm" />
 
@@ -67,6 +81,7 @@ export default function Main(props) {
             <Space h="sm" />
         </>
     );
+
 }
 
 const ChipGradientSwatch = styled.div`
