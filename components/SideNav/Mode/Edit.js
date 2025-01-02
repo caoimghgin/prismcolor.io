@@ -49,6 +49,10 @@ export default function Main(props) {
         props.setDelegate({ ...props.delegate, editing: null })
     }
 
+    const updateAnchorValue = (event) => {
+        if (event.length === 7) setAnchorValue(event)
+    }
+
     if (!editing) return
     return (
         <>
@@ -73,7 +77,8 @@ export default function Main(props) {
                 </Chip>
                 <Space h="sm" />
 
-                {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={setAnchorValue} /> : null }
+                {/* {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={setAnchorValue} /> : null } */}
+                {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={(event) => updateAnchorValue(event)} /> : null }
 
                 <Space h="sm" />
 
