@@ -9,14 +9,14 @@ const AnimationVariants = {
     opacity: 0,
   },
   animateIn: {
-    scale: [0, 0.1, 1],
+    scale: [0, 0.75, 1],
     opacity: [0, 0.5, 1],
-    type: 'tween',
+    // transition: { duration: 3 },
   },
   animateOut: {
     scale: [1, 0.9, 0],
     opacity: [1, 0.5, 0],
-    type: 'tween',
+    transition: { when: 'afterChildren' },
   },
 };
 
@@ -33,14 +33,15 @@ export default function SwatchGroupView(props) {
           const currentWeight = optimization?.values[index]?.weight;
 
           return (
-            <AnimatePresence initial={false} mode="sync">
+            <AnimatePresence initial={false} mode="popLayout">
               {currentWeight && (
                 <motion.div
+                  layout
                   key={index}
                   initial={'initial'}
                   animate={'animateIn'}
-                  exit={'animateOut'}
                   variants={AnimationVariants}
+                  exit={'animateOut'}
                 >
                   <Swatch model={model} delegate={props.delegate} />
                 </motion.div>
