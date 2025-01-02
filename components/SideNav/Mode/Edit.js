@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { Select, Space, TextInput, Button, ColorInput, Divider } from '@mantine/core';
 import { optimizations } from '@/models/OptimizationModel'
 import ColumnModel from "@/models/ColumnModel";
+import Color, {Parse} from 'colorjs.io';
 
 export default function Main(props) {
 
@@ -10,12 +11,22 @@ export default function Main(props) {
     const [anchor, setAnchor]  = useState();
     const [anchorValue, setAnchorValue] = useState();
     const [editing, setEditing] = useState();
+    const [keyValues, setKeyValues] = useState();
 
     useEffect(() => {
         setEditing(props.delegate.editing)
         setValue(props.delegate.editing.semantic)
         setAnchor(props.delegate.editing.swatches.find(item => item.isAnchor))
+        setKeyValues(parseKeyValues(props.delegate.editing.swatches))
     }, [])
+
+    useEffect(() => {
+        if (!keyValues) return
+        console.log("NEW KEY VALUES ->", keyValues)
+        const newSet = new ColumnModel(editing.id, editing.semantic, keyValues)
+        setEditing(newSet)
+        props.setDelegate({ ...props.delegate, editing: newSet })
+    }, [keyValues])
 
     useEffect(() => {
         if (!anchor) return
@@ -33,6 +44,16 @@ export default function Main(props) {
         if (!editing) return
         props.model.scales[editing.id].semantic = value
     }, [value])
+
+    function parseKeyValues(swatches) {
+        const result = []
+        result.push(props.delegate.editing.swatches.find(item => item.isAnchor))
+        if (result[0] === undefined) return []
+        result.push(swatches.filter(swatch => swatch.isKey))
+        return result.flat(1).map((swatch, index) => (
+            index === 0 ? swatch.value.origin : swatch.value.destination
+        ))
+    }
 
     const onChangeOptimizationHandler = (optimization) => {
         const result = { ...props.delegate, optimization: optimization }
@@ -79,6 +100,22 @@ export default function Main(props) {
 
                 {/* {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={setAnchorValue} /> : null } */}
                 {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={(event) => updateAnchorValue(event)} /> : null }
+                <Space h="sm" />
+                <Divider my="md" />
+
+                {keyValues.map(key =>  {
+                    // console.log("->", key)
+                    // const defaultValue = new Color(key)
+                    // console.log("->", defaultValue)
+
+                    const parsedValue = Color.parse(key)
+                    const defaultValue = new Color(parsedValue.spaceId, parsedValue.coords)
+                    console.log("-->", defaultValue.toString({format: "hex"}))
+                    return (
+                        <ColorInput defaultValue={defaultValue.toString({format: "hex"})}  mb={8}/> 
+                    )
+
+                } )}
 
                 <Space h="sm" />
 

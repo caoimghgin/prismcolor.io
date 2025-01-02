@@ -14,11 +14,11 @@ export default function Create() {
     useEffect(() => {
         const data = [
             { index: 1, semantic: "primary", keys: ["oklch(52.95% 0.1609 244.63)"] },
-            { index: 2, semantic: "secondary", keys: ["#7b6747", "oklab(35.512% 0.00687 0.03516)"] },
+            { index: 2, semantic: "secondary", keys: ["oklab(35.512% 0.00687 0.03516)", "#7b6747"] },
             { index: 3, semantic: "positive", keys: ["#007c00"] },
             { index: 4, semantic: "negative", keys: ["#d80000"] },
             { index: 5, semantic: "highlight", keys: ["#ffc107"] },
-            { index: 6, semantic: "info", keys: ["#035ef9"] },
+            { index: 6, semantic: "info", keys: ["#035ef9", "#013391", "#91b9ff"] },
             { index: 7, semantic: "system", keys: ["#0A66D8"] },
             { index: 8, semantic: "neutral", keys: null },
         ]

@@ -23,35 +23,35 @@ export default function Main(props) {
 
     return (
         <>
-        <Select
-            label = "Optimization"
-            value = {props.delegate.optimization}
-            data = {optimizations.map(item => item.name)}
-            onChange={onChangeOptimizationHandler}
-        />
-        <Space h="8" />
-        <Select
-            label = "Contrast"
-            value = {props.delegate.contrast}
-            placeholder = "Pick Swatch Contrast"
-            data = {['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16', 'HCT T%']}
-            onChange={onChangeContrastHandler}
-        />
-        <Space h="36" />
-        {props.model.scales.map(item => {
-            return (
-            <>
-                <Chip onClick={() => onClick(item)}>
-                    <ChipGradientSwatch model={item}/>
-                    {item.semantic}
-                    <Icon><IconPencil size={18}/></Icon>
-                </Chip>
-                <Space h="sm" />
-            </>
-            )
-        })}
+            <Select
+                label="Optimization"
+                value={props.delegate.optimization}
+                data={optimizations.map(item => item.name)}
+                onChange={onChangeOptimizationHandler}
+            />
+            <Space h="8" />
+            <Select
+                label="Contrast"
+                value={props.delegate.contrast}
+                placeholder="Pick Swatch Contrast"
+                data={['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16', 'HCT T%']}
+                onChange={onChangeContrastHandler}
+            />
+            <Space h="36" />
+            {props.model.scales.map(item => {
+                return (
+                    <>
+                        <Chip onClick={() => onClick(item)}>
+                            <ChipGradientSwatch model={item} />
+                            {item.semantic}
+                            <Icon><IconPencil size={18} /></Icon>
+                        </Chip>
+                        <Space h="sm" />
+                    </>
+                )
+            })}
         </>
-      );
+    );
 }
 
 const Icon = styled.div`

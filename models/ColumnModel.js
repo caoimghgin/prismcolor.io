@@ -24,8 +24,6 @@ export default class ColumnModel {
                 values = values.map(value => new ColorModel(value))
             } 
 
-            // console.log(values)
-
             if (values.length) this.destinationSpace = values && values.length ? values[0].space.id : null
 
             values.forEach((color, index) => {
