@@ -14,7 +14,7 @@ export default function Create() {
     useEffect(() => {
         const data = [
             { index: 1, semantic: "primary", keys: ["oklch(52.95% 0.1609 244.63)"] },
-            { index: 2, semantic: "secondary", keys: ["oklab(35.512% 0.00687 0.03516)", "#7b6747"] },
+            { index: 2, semantic: "secondary", keys: ["#867356", "#3a2f1e", "#cec6b9"] },
             { index: 3, semantic: "positive", keys: ["#007c00"] },
             { index: 4, semantic: "negative", keys: ["#d80000"] },
             { index: 5, semantic: "highlight", keys: ["#ffc107"] },

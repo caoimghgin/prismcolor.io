@@ -3,42 +3,26 @@ import { useState, useEffect } from "react"
 import { Select, Space, TextInput, Button, ColorInput, Divider } from '@mantine/core';
 import { optimizations } from '@/models/OptimizationModel'
 import ColumnModel from "@/models/ColumnModel";
-import Color, {Parse} from 'colorjs.io';
+import Color from 'colorjs.io';
 
 export default function Main(props) {
 
     const [value, setValue] = useState();
-    const [anchor, setAnchor]  = useState();
-    const [anchorValue, setAnchorValue] = useState();
     const [editing, setEditing] = useState();
     const [keyValues, setKeyValues] = useState();
 
     useEffect(() => {
         setEditing(props.delegate.editing)
         setValue(props.delegate.editing.semantic)
-        setAnchor(props.delegate.editing.swatches.find(item => item.isAnchor))
         setKeyValues(parseKeyValues(props.delegate.editing.swatches))
     }, [])
 
     useEffect(() => {
         if (!keyValues) return
-        console.log("NEW KEY VALUES ->", keyValues)
         const newSet = new ColumnModel(editing.id, editing.semantic, keyValues)
         setEditing(newSet)
         props.setDelegate({ ...props.delegate, editing: newSet })
     }, [keyValues])
-
-    useEffect(() => {
-        if (!anchor) return
-        if (anchor) setAnchorValue(anchor.hex)
-    }, [anchor])
-
-    useEffect(() => {
-        if (!anchorValue) return
-        const newSet = new ColumnModel(editing.id, editing.semantic, [anchorValue])
-        setEditing(newSet)
-        props.setDelegate({ ...props.delegate, editing: newSet })
-    }, [anchorValue])
 
     useEffect(() => {
         if (!editing) return
@@ -70,11 +54,17 @@ export default function Main(props) {
         props.setDelegate({ ...props.delegate, editing: null })
     }
 
-    const updateAnchorValue = (event) => {
-        if (event.length === 7) setAnchorValue(event)
+    const updateKeyValues = (event, index) => {
+        console.log(event, index)
+        if (event.length === 7) {
+            const result = keyValues
+            result[index] = event
+            setKeyValues([...result])
+        }
     }
 
     if (!editing) return
+
     return (
         <>
             <Button size="xs" color="#0070c1" onClick={() => onSave()}>Save</Button>
@@ -97,28 +87,17 @@ export default function Main(props) {
                     />
                 </Chip>
                 <Space h="sm" />
-
-                {/* {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={setAnchorValue} /> : null } */}
-                {anchorValue ? <ColorInput defaultValue={anchorValue} onChange={(event) => updateAnchorValue(event)} /> : null }
-                <Space h="sm" />
+                Keys
                 <Divider my="md" />
 
-                {keyValues.map(key =>  {
-                    // console.log("->", key)
-                    // const defaultValue = new Color(key)
-                    // console.log("->", defaultValue)
-
+                {keyValues.map((key, index) => {
                     const parsedValue = Color.parse(key)
                     const defaultValue = new Color(parsedValue.spaceId, parsedValue.coords)
-                    console.log("-->", defaultValue.toString({format: "hex"}))
                     return (
-                        <ColorInput defaultValue={defaultValue.toString({format: "hex"})}  mb={8}/> 
+                        <ColorInput defaultValue={defaultValue.toString({ format: "hex" })} onChange={(event) => updateKeyValues(event, index)} mb={8} />
                     )
-
-                } )}
-
+                })}
                 <Space h="sm" />
-
             </>
             <Space h="sm" />
         </>
