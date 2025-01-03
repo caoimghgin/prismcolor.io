@@ -1,4 +1,5 @@
 import { targets } from '../constants';
+import { optimizations } from '../models/OptimizationModel.js';
 
 export const hexToDecimal = (value) => {
   return eightBitToDecimal(hexToRgb(value));
@@ -60,6 +61,9 @@ export const toCoords = (value) => {
 export const dpsConstrast = (a, b) => {
   return (Math.abs(a ** 1.618 - b ** 1.618) ** 0.618 * 1.414 - 40).toFixed(2);
 };
+
+export const findOptimizationType = (delegateOptimization) =>
+  optimizations.find((item) => item.name === delegateOptimization);
 
 // Animation variants
 

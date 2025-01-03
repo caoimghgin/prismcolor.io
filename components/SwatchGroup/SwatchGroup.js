@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import styled from 'styled-components';
-import { optimizations } from '../../models/OptimizationModel.js';
+import { findOptimizationType } from '../../utilities';
 import Swatch from './Swatch';
 
 const AnimationVariants = {
@@ -23,7 +23,7 @@ const AnimationVariants = {
 export default function SwatchGroupView(props) {
   if (!props.model) return null;
 
-  const optimization = optimizations.find((item) => item.name === props.delegate.optimization);
+  const optimization = findOptimizationType(props.delegate.optimization);
 
   return (
     <Container>
