@@ -41,7 +41,7 @@ export default function SwatchGroupView(props) {
                   initial={'initial'}
                   animate={'animateIn'}
                   variants={AnimationVariants}
-                  exit={'animateOut'}
+                  // exit={'animateOut'}
                 >
                   <Swatch model={model} delegate={props.delegate} />
                 </motion.div>
