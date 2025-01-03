@@ -4,6 +4,7 @@ import { Select, Space, TextInput, Button, ColorInput, Divider } from '@mantine/
 import { optimizations } from '@/models/OptimizationModel'
 import ColumnModel from "@/models/ColumnModel";
 import Color from 'colorjs.io';
+import { Trash2 } from 'feather-icons-react';
 
 export default function Main(props) {
 
@@ -22,6 +23,7 @@ export default function Main(props) {
         const newSet = new ColumnModel(editing.id, editing.semantic, keyValues)
         setEditing(newSet)
         props.setDelegate({ ...props.delegate, editing: newSet })
+        console.log(keyValues)
     }, [keyValues])
 
     useEffect(() => {
@@ -54,13 +56,19 @@ export default function Main(props) {
         props.setDelegate({ ...props.delegate, editing: null })
     }
 
-    const updateKeyValues = (event, index) => {
+    const onUpdateKeyValues = (event, index) => {
         console.log(event, index)
         if (event.length === 7) {
             const result = keyValues
             result[index] = event
             setKeyValues([...result])
         }
+    }
+
+    const onDeleteKeyValue = (index) => {
+        const result = keyValues
+        result.splice(index, 1)
+        setKeyValues([...result])
     }
 
     if (!editing) return
@@ -94,7 +102,13 @@ export default function Main(props) {
                     const parsedValue = Color.parse(key)
                     const defaultValue = new Color(parsedValue.spaceId, parsedValue.coords)
                     return (
-                        <ColorInput defaultValue={defaultValue.toString({ format: "hex" })} onChange={(event) => updateKeyValues(event, index)} mb={8} />
+                        <>
+                            <KeyChip>
+                                <ColorInput defaultValue={defaultValue.toString({ format: "hex" })} onChange={(event) => onUpdateKeyValues(event, index)} mr={8} width={50} />
+                                <Trash2 size={18} onClick={(event) => onDeleteKeyValue(index)}/>
+                            </KeyChip>
+                            <Space h={12} />
+                        </>
                     )
                 })}
                 <Space h="sm" />
@@ -104,6 +118,11 @@ export default function Main(props) {
     );
 
 }
+
+const KeyChip = styled.div`
+    display: flex;
+    align-items: center;
+`
 
 const ChipGradientSwatch = styled.div`
     height:64px;

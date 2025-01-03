@@ -18,7 +18,7 @@ export default function Create() {
             { index: 3, semantic: "positive", keys: ["#007c00"] },
             { index: 4, semantic: "negative", keys: ["#d80000"] },
             { index: 5, semantic: "highlight", keys: ["#ffc107"] },
-            { index: 6, semantic: "info", keys: ["#035ef9", "#013391", "#91b9ff"] },
+            { index: 6, semantic: "info", keys: ["#035ef9", "#d2e3ff", "#013391", "#0248c3",  "#91b9ff"] },
             { index: 7, semantic: "system", keys: ["#0A66D8"] },
             { index: 8, semantic: "neutral", keys: null },
         ]
