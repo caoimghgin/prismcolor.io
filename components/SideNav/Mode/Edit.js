@@ -68,7 +68,9 @@ export default function Main(props) {
     const onDeleteKeyValue = (index) => {
         const result = keyValues
         result.splice(index, 1)
-        setKeyValues([...result])
+        const newSet = new ColumnModel(editing.id, editing.semantic, result)
+        setEditing(newSet)
+        props.setDelegate({ ...props.delegate, editing: newSet })
     }
 
     if (!editing) return
@@ -104,7 +106,7 @@ export default function Main(props) {
                     return (
                         <>
                             <KeyChip>
-                                <ColorInput defaultValue={defaultValue.toString({ format: "hex" })} onChange={(event) => onUpdateKeyValues(event, index)} mr={8} width={50} />
+                                <ColorInput value={defaultValue.toString({ format: "hex" })} onChange={(event) => onUpdateKeyValues(event, index)} mr={8} />
                                 <Trash2 size={18} onClick={(event) => onDeleteKeyValue(index)}/>
                             </KeyChip>
                             <Space h={12} />
