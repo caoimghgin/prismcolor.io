@@ -4,7 +4,7 @@ import { Select, Space, TextInput, Button, ColorInput, Divider } from '@mantine/
 import { optimizations } from '@/models/OptimizationModel'
 import ColumnModel from "@/models/ColumnModel";
 import Color from 'colorjs.io';
-import { Trash2 } from 'feather-icons-react';
+import { Trash2, PlusCircle, XCircle } from 'feather-icons-react';
 
 export default function Main(props) {
 
@@ -73,6 +73,14 @@ export default function Main(props) {
         props.setDelegate({ ...props.delegate, editing: newSet })
     }
 
+    const onAddKey = () => {
+        const result = keyValues
+        result.push("#FFFFFF")
+        const newSet = new ColumnModel(editing.id, editing.semantic, result)
+        setEditing(newSet)
+        props.setDelegate({ ...props.delegate, editing: newSet })
+    }
+
     if (!editing) return
 
     return (
@@ -88,7 +96,7 @@ export default function Main(props) {
                 data={optimizations.map(item => item.name)}
                 onChange={onChangeOptimizationHandler}
             />
-            <Space h={36} />
+            <Space h="md" />
             <>
                 <Chip>
                     <ChipGradientSwatch model={editing} />
@@ -97,8 +105,19 @@ export default function Main(props) {
                     />
                 </Chip>
                 <Space h="sm" />
-                Keys
                 <Divider my="md" />
+                <>
+                    
+                <KeysHeader>
+                    <Title>Keys</Title>
+                    <KeysHeader>
+                    <XCircle size={20}></XCircle>
+                    <Space w={8} />
+                    <PlusCircle size={20} onClick={() => onAddKey()}></PlusCircle>                    
+                    </KeysHeader>
+                </KeysHeader>
+                </>
+                <Space h={16} />
 
                 {keyValues.map((key, index) => {
                     const parsedValue = Color.parse(key)
@@ -120,6 +139,38 @@ export default function Main(props) {
     );
 
 }
+
+
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 56px;
+  border-bottom:1px solid #e3e3e3;
+  background: #ffffff;
+  padding-left: 24px;
+  padding-right: 24px;
+`
+
+
+const KeysHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`
+
+const Title = styled.div`
+font-weight: 500;
+font-size: 14px;
+`
 
 const KeyChip = styled.div`
     display: flex;
