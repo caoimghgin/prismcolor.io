@@ -59,13 +59,17 @@ function downloadBlob(blob: any, name = 'prismColorPalette.json') {
   document.body.removeChild(link);
 }
 
-const ButtonGroup = styled.div`
+const ButtonGroup = styled.div.withConfig({
+  componentId: 'NavBar__ButtonGroup',
+})`
   display: flex;
   align-items: center;
   gap: 4px;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.withConfig({
+  componentId: 'NavBar__Wrapper',
+})`
   display: flex;
   align-items: center;
   justify-content: space-between;
