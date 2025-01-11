@@ -1,4 +1,4 @@
-import ColumnModel from "./ColumnModel";
+import ScaleModel from "./ScaleModel";
 
 export default class PaletteModel {
 
@@ -9,7 +9,7 @@ export default class PaletteModel {
         props.forEach((prop, index) => {
             const semantic = prop.semantic
             const keys = prop.keys
-            const model = new ColumnModel(index, semantic, keys)
+            const model = new ScaleModel(index, semantic, keys)
             this.scales.push(model);
         })
     }

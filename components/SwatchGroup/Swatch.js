@@ -22,7 +22,7 @@ const render = (model, delegate, onClickHandler) => {
     if (!model) return
 
     const optimizationType = optimizations.find(item => item.name === delegate.optimization)
-    const optimizedValue = optimizationType.values.find(item => item.univers === parseFloat(model.weight))
+    const optimizedValue = optimizationType.values.find(item => item.universalWeight === parseFloat(model.weight))
     if (!optimizedValue.weight) return
 
     return <Wrapper>

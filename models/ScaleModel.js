@@ -2,7 +2,7 @@ import ColorModel from './ColorModel';
 import SwatchModel from './SwatchModel';
 import { targets } from '../constants';
 
-export default class ColumnModel {
+export default class ScaleModel {
 
     id = 0
     semantic = null

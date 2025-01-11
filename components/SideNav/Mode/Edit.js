@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react"
 import { Select, Space, TextInput, Button, ColorInput, Divider } from '@mantine/core';
 import { optimizations } from '@/models/OptimizationModel'
-import ColumnModel from "@/models/ColumnModel";
+import ScaleModel from "@/models/ScaleModel";
 import Color from 'colorjs.io';
 import { Trash2, PlusCircle, XCircle } from 'feather-icons-react';
 
@@ -20,7 +20,7 @@ export default function Main(props) {
 
     useEffect(() => {
         if (!keyValues) return
-        const newSet = new ColumnModel(editing.id, editing.semantic, keyValues)
+        const newSet = new ScaleModel(editing.id, editing.semantic, keyValues)
         setEditing(newSet)
         props.setDelegate({ ...props.delegate, editing: newSet })
         console.log(keyValues)
@@ -68,7 +68,7 @@ export default function Main(props) {
     const onDeleteKeyValue = (index) => {
         const result = keyValues
         result.splice(index, 1)
-        const newSet = new ColumnModel(editing.id, editing.semantic, result)
+        const newSet = new ScaleModel(editing.id, editing.semantic, result)
         setEditing(newSet)
         props.setDelegate({ ...props.delegate, editing: newSet })
     }
@@ -76,7 +76,7 @@ export default function Main(props) {
     const onAddKey = () => {
         const result = keyValues
         result.push("#FFFFFF")
-        const newSet = new ColumnModel(editing.id, editing.semantic, result)
+        const newSet = new ScaleModel(editing.id, editing.semantic, result)
         setEditing(newSet)
         props.setDelegate({ ...props.delegate, editing: newSet })
     }
