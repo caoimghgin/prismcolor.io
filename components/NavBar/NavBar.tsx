@@ -6,7 +6,7 @@ import NavBarMenu from "./NavBarMenu";
 import { optimizations } from "@/models/OptimizationModel";
 
 export default function NavBar(props: any) {
-  if (!props.model) return
+  if (!props.model) {return}
   return (
     <Wrapper>
       <Image
@@ -27,7 +27,6 @@ function downloadAction(props: any) {
   const {model, delegate} = props
   const optimization = optimizations.find(item => item.name === delegate.optimization)
   const data = {optimization, ...model}
-  console.log(data)
   const json = JSON.stringify(data, null, 4);
   const blob = new Blob([json], { type: 'application/json' });
   downloadBlob(blob);
