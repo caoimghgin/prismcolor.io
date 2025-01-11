@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button } from '@mantine/core';
 import { IconDownload } from "@tabler/icons-react";
 import NavBarMenu from "./NavBarMenu";
+import { optimizations } from "@/models/OptimizationModel";
 
 export default function NavBar(props: any) {
   if (!props.model) return
@@ -24,7 +25,10 @@ export default function NavBar(props: any) {
 
 function downloadAction(props: any) {
   const {model, delegate} = props
-  const json = JSON.stringify({optimization:delegate.optimization, ...model}, null, 4);
+  const optimization = optimizations.find(item => item.name === delegate.optimization)
+  const data = {optimization, ...model}
+  console.log(data)
+  const json = JSON.stringify(data, null, 4);
   const blob = new Blob([json], { type: 'application/json' });
   downloadBlob(blob);
 }
