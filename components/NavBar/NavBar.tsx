@@ -25,8 +25,8 @@ export default function NavBar(props: any) {
 
 function downloadAction(props: any) {
   const {model, delegate} = props
-  const optimization = optimizations.find(item => item.name === delegate.optimization)
-  const data = {optimization, ...model}
+  const selection = {optimization:delegate.optimization, ...model}
+  const data = {optimizations, selection}
   const json = JSON.stringify(data, null, 4);
   const blob = new Blob([json], { type: 'application/json' });
   downloadBlob(blob);

@@ -2,7 +2,7 @@ import ScaleModel from "./ScaleModel";
 
 export default class PaletteModel {
 
-    scales = []
+    values = []
 
     constructor(props) {
         if (!Array.isArray(props)) return
@@ -10,7 +10,7 @@ export default class PaletteModel {
             const semantic = prop.semantic
             const keys = prop.keys
             const model = new ScaleModel(index, semantic, keys)
-            this.scales.push(model);
+            this.values.push(model);
         })
     }
 

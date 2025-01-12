@@ -28,7 +28,7 @@ export default function Main(props) {
 
     useEffect(() => {
         if (!editing) return
-        props.model.scales[editing.id].semantic = value
+        props.model.values[editing.id].semantic = value
     }, [value])
 
     function parseKeyValues(swatches) {
@@ -48,7 +48,7 @@ export default function Main(props) {
 
     const onSave = (event) => {
         if (!editing) return
-        props.model.scales[editing.id] = editing
+        props.model.values[editing.id] = editing
         props.setDelegate({ ...props.delegate, editing: null })
     }
 
@@ -139,26 +139,6 @@ export default function Main(props) {
     );
 
 }
-
-
-const ButtonGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`
-
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 56px;
-  border-bottom:1px solid #e3e3e3;
-  background: #ffffff;
-  padding-left: 24px;
-  padding-right: 24px;
-`
-
 
 const KeysHeader = styled.div`
     display: flex;

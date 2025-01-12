@@ -38,7 +38,7 @@ export default function Main(props) {
                 onChange={onChangeContrastHandler}
             />
             <Space h="36" />
-            {props.model.scales.map(item => {
+            {props.model.values.map(item => {
                 return (
                     <>
                         <Chip onClick={() => onClick(item)}>
