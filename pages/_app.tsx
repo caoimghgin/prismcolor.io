@@ -9,6 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider theme={theme}>
       <Head>
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
         <title>Prism</title>
         <meta
           name="viewport"
