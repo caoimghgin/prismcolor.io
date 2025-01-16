@@ -4,28 +4,33 @@ import styled from 'styled-components';
 import { optimizations } from '../../models/OptimizationModel.js';
 
 export default function SwatchView(props) {
+  if (!props.model || !props.delegate) {
+    return;
+  }
   const [model, setModel] = useState();
 
   useEffect(() => {
-    if (!props.model || !props.delegate) return;
     setModel({ ...props.model, delegate: props.delegate });
   }, [props.model, props.delegate]);
 
   const onClickHandler = () => {
-    if (!model.hex) return;
     navigator.clipboard.writeText(model.hex);
   };
   return render(model, props.delegate, onClickHandler);
 }
 
 const render = (model, delegate, onClickHandler) => {
-  if (!model) return;
+  if (!model) {
+    return;
+  }
 
   const optimizationType = optimizations.find((item) => item.name === delegate.optimization);
   const optimizedValue = optimizationType.values.find(
     (item) => item.universalWeight === parseFloat(model.weight)
   );
-  if (!optimizedValue.weight) return;
+  if (!optimizedValue.weight) {
+    return;
+  }
 
   return (
     <Wrapper>
@@ -33,10 +38,10 @@ const render = (model, delegate, onClickHandler) => {
       <Swatch model={model} delegate={delegate} onClick={onClickHandler}>
         <TopSection model={model}>
           <TopSectionLeft model={model}>{getSymbols(model)}</TopSectionLeft>
-          <TopSectionMiddle model={model}></TopSectionMiddle>
+          <TopSectionMiddle model={model} />
           <TopSectionRight model={model}>{model.weight}</TopSectionRight>
         </TopSection>
-        <MiddleSection model={model}></MiddleSection>
+        <MiddleSection model={model} />
         <BottomSection model={model}>{contrastLabel(model, delegate)}</BottomSection>
       </Swatch>
     </Wrapper>
@@ -46,24 +51,31 @@ const render = (model, delegate, onClickHandler) => {
 const getSymbols = (model) => {
   const size = 14;
   if (!model.color.inGamut('srgb')) {
-    if (model.isAnchor)
+    if (model.isAnchor) {
       return (
         <div>
           <Anchor size={size} /> <AlertTriangle size={size} />{' '}
         </div>
       );
-    if (model.isKey)
+    }
+    if (model.isKey) {
       return (
         <div>
           <Key size={size} /> <AlertTriangle size={size} />{' '}
         </div>
       );
+    }
     return <AlertTriangle size={size} />;
   }
-  if (model.isAnchor) return <Anchor size={size} />;
-  if (model.isLock) return <Lock size={size} />;
-
-  if (model.isKey) return <Key size={size} />;
+  if (model.isAnchor) {
+    return <Anchor size={size} />;
+  }
+  if (model.isLock) {
+    return <Lock size={size} />;
+  }
+  if (model.isKey) {
+    return <Key size={size} />;
+  }
   return null;
 };
 
@@ -81,7 +93,9 @@ const contrastLabel = (model, delegate) => {
   if (delegate.contrast === 'APCA') {
     const white = Math.abs(model.apca_white);
     const black = Math.abs(model.apca_black);
-    if (white > black) return `Lc ${model.apca_white.toFixed(2)}`;
+    if (white > black) {
+      return `Lc ${model.apca_white.toFixed(2)}`;
+    }
     return `Lc ${model.apca_black.toFixed(2)}`;
   }
 
@@ -128,7 +142,9 @@ const swatchFrgColor = (props) => {
   }
   const white = Math.abs(props.model.apca_white);
   const black = Math.abs(props.model.apca_black);
-  if (white > black) return 'white';
+  if (white > black) {
+    return 'white';
+  }
   return 'black';
 };
 
