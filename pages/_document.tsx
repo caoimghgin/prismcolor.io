@@ -1,5 +1,6 @@
 import { Head, Html, Main, NextScript } from 'next/document';
 import { ColorSchemeScript } from '@mantine/core';
+import StyledComponentsRegistry from '@/utilities/registry';
 
 export default function Document() {
   return (
@@ -8,8 +9,10 @@ export default function Document() {
         <ColorSchemeScript />
       </Head>
       <body>
-        <Main />
-        <NextScript />
+        <StyledComponentsRegistry>
+          <Main />
+          <NextScript />
+        </StyledComponentsRegistry>
       </body>
     </Html>
   );
