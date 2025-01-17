@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment } from 'react';
 import { IconPencil } from '@tabler/icons-react';
 import styled from 'styled-components';
@@ -6,12 +8,12 @@ import { optimizations } from '../../../models/OptimizationModel';
 
 export default function Main(props) {
   const onChangeContrastHandler = (contrast) => {
-    const result = { ...props.delegate, contrast: contrast };
+    const result = { ...props.delegate, contrast };
     props.setDelegate(result);
   };
 
   const onChangeOptimizationHandler = (optimization) => {
-    const result = { ...props.delegate, optimization: optimization };
+    const result = { ...props.delegate, optimization };
     props.setDelegate(result);
   };
 
@@ -41,7 +43,7 @@ export default function Main(props) {
         return (
           <Fragment key={item.semantic}>
             <Chip onClick={() => onClick(item)} key={item.semantic}>
-              <ChipGradientSwatch model={item}>
+              <ChipGradientSwatch>
                 {item.swatches.map((pip) => (
                   <Pip $model={pip.hex} key={pip.hex} />
                 ))}
