@@ -12,4 +12,7 @@ export default withBundleAnalyzer({
   experimental: {
     reactCompiler: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
 });
