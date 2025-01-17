@@ -43,7 +43,7 @@ export default function Main(props) {
             <Chip onClick={() => onClick(item)} key={item.semantic}>
               <ChipGradientSwatch model={item}>
                 {item.swatches.map((pip) => (
-                  <Pip model={pip.hex} key={pip.hex} />
+                  <Pip $model={pip.hex} key={pip.hex} />
                 ))}
               </ChipGradientSwatch>
               {item.semantic}
@@ -64,11 +64,11 @@ const Icon = styled.div`
   margin-right: 0;
 `;
 
-const Pip = styled.div`
-  height: 14px;
-  width: 14px;
-  background-color: ${(props) => props.model};
-`;
+const Pip = styled.div((props) => ({
+  backgroundColor: props.$model,
+  height: '14px',
+  width: '14px',
+}));
 
 const ChipGradientSwatch = styled.div`
   display: flex;
