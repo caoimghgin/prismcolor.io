@@ -6,7 +6,7 @@ import StyledComponentsRegistry from '@/utilities/registry';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" suppressHydrationWarning>
       <Head>
         <ColorSchemeScript />
       </Head>

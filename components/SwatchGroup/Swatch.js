@@ -35,14 +35,14 @@ const render = (model, delegate, onClickHandler) => {
   return (
     <Wrapper>
       {optimizedValue.weight}
-      <Swatch model={model} delegate={delegate} onClick={onClickHandler}>
-        <TopSection model={model}>
-          <TopSectionLeft model={model}>{getSymbols(model)}</TopSectionLeft>
-          <TopSectionMiddle model={model} />
-          <TopSectionRight model={model}>{model.weight}</TopSectionRight>
+      <Swatch $model={model} $delegate={delegate} onClick={onClickHandler}>
+        <TopSection $model={model}>
+          <TopSectionLeft $model={model}>{getSymbols(model)}</TopSectionLeft>
+          <TopSectionMiddle $model={model} />
+          <TopSectionRight $model={model}>{model.weight}</TopSectionRight>
         </TopSection>
-        <MiddleSection model={model} />
-        <BottomSection model={model}>{contrastLabel(model, delegate)}</BottomSection>
+        <MiddleSection $model={model} />
+        <BottomSection $model={model}>{contrastLabel(model, delegate)}</BottomSection>
       </Swatch>
     </Wrapper>
   );
@@ -129,19 +129,19 @@ const Swatch = styled.div`
   min-width: 72px;
   height: 72px;
   min-height: 72px;
-  background: ${(props) => props.model.value.destination};
-  color: ${(props) => swatchFrgColor(props)};
+  background: ${(props) => props.$model.value.destination};
+  color: ${(props) => swatchFrgColor(props.$delegate, props.$model)};
   border-radius: 8px;
   margin: 0px 16px 8px 0px;
-  border: ${(props) => (props.model.lab_d65_l > 90 ? '1px solid #E2E2E2' : null)};
+  border: ${(props) => (props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : null)};
 `;
 
-const swatchFrgColor = (props) => {
-  if (props.delegate.contrast === 'WCAG21') {
-    return props.model.lab_d65_l < 50 ? 'white' : 'black';
+const swatchFrgColor = (delegate, model) => {
+  if (delegate.contrast === 'WCAG21') {
+    return model.lab_d65_l < 50 ? 'white' : 'black';
   }
-  const white = Math.abs(props.model.apca_white);
-  const black = Math.abs(props.model.apca_black);
+  const white = Math.abs(model.apca_white);
+  const black = Math.abs(model.apca_black);
   if (white > black) {
     return 'white';
   }
@@ -159,21 +159,25 @@ const TopSection = styled.div`
   padding-right: 8px;
   padding-left: 8px;
   padding-top: 2px;
-  // border: ${(props) => (props.model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2')};
+  // border: ${(props) =>
+    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const TopSectionLeft = styled.div`
   padding-top: 2px;
-  // border: ${(props) => (props.model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2')};
+  // border: ${(props) =>
+    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const TopSectionMiddle = styled.div`
-  // border: ${(props) => (props.model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2')};
+  // border: ${(props) =>
+    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const TopSectionRight = styled.div`
   padding-top: 1.5px;
-  // border: ${(props) => (props.model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2')};
+  // border: ${(props) =>
+    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const MiddleSection = styled.div`
@@ -183,7 +187,8 @@ const MiddleSection = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: -5px;
-  // border: ${(props) => (props.model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2')};
+  // border: ${(props) =>
+    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const BottomSection = styled.div`
@@ -195,5 +200,6 @@ const BottomSection = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  // border: ${(props) => (props.model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2')};
+  // border: ${(props) =>
+    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
