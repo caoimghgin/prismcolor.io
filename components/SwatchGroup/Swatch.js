@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AlertTriangle, Anchor, Key, Lock } from 'feather-icons-react';
 import styled from 'styled-components';
 import { optimizations } from '../../models/OptimizationModel.js';
+import { swatchFrgColor } from '../../utilities/index.js';
 
 export default function SwatchView(props) {
   if (!props.model || !props.delegate) {
@@ -135,18 +136,6 @@ const Swatch = styled.div`
   margin: 0px 16px 8px 0px;
   border: ${(props) => (props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : null)};
 `;
-
-const swatchFrgColor = (delegate, model) => {
-  if (delegate.contrast === 'WCAG21') {
-    return model.lab_d65_l < 50 ? 'white' : 'black';
-  }
-  const white = Math.abs(model.apca_white);
-  const black = Math.abs(model.apca_black);
-  if (white > black) {
-    return 'white';
-  }
-  return 'black';
-};
 
 const TopSection = styled.div`
   height: 20px;
