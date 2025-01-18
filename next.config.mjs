@@ -9,9 +9,6 @@ export default withBundleAnalyzer({
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    reactCompiler: true,
-  },
   compiler: {
     styledComponents: true,
   },

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import NavBar from '@/components/NavBar/NavBar';
 import PaletteView from '@/components/PaletteView/PaletteView';
