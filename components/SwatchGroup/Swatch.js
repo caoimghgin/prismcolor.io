@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AlertTriangle, Anchor, Key, Lock } from 'feather-icons-react';
 import styled from 'styled-components';
 import { optimizations } from '../../models/OptimizationModel.js';
@@ -14,9 +14,9 @@ export default function SwatchView(props) {
     setModel({ ...props.model, delegate: props.delegate });
   }, [props.model, props.delegate]);
 
-  const onClickHandler = () => {
-    navigator.clipboard.writeText(model.hex);
-  };
+  const onClickHandler = useCallback(() => {
+    navigator.clipboard.writeText(props.model.hex);
+  }, []);
   return render(model, props.delegate, onClickHandler);
 }
 
