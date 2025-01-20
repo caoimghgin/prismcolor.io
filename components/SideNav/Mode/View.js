@@ -1,62 +1,64 @@
-import { IconPencil } from "@tabler/icons-react";
-import styled from "styled-components";
-import { Select, Space, useMantineColorScheme } from '@mantine/core';
+'use client';
+
+import { Fragment } from 'react';
+import { IconPencil } from '@tabler/icons-react';
+import styled from 'styled-components';
+import { Select, Space } from '@mantine/core';
 import { optimizations } from '../../../models/OptimizationModel';
 
-
 export default function Main(props) {
-    const { setColorScheme } = useMantineColorScheme();
+  const onChangeContrastHandler = (contrast) => {
+    const result = { ...props.delegate, contrast };
+    props.setDelegate(result);
+  };
 
-    const onChangeContrastHandler = (contrast) => {
-        const result = {...props.delegate, contrast: contrast}
-        props.setDelegate(result)
-    }
+  const onChangeOptimizationHandler = (optimization) => {
+    const result = { ...props.delegate, optimization };
+    props.setDelegate(result);
+  };
 
-    const onChangeOptimizationHandler = (optimization) => {
-        const result = {...props.delegate, optimization: optimization}
-        props.setDelegate(result)
-    }
+  const onClick = (value) => {
+    const result = { ...props.delegate, editing: value };
+    props.setDelegate(result);
+  };
 
-    const onClick = (value) => {
-        const result = {...props.delegate, editing: value}
-        props.setDelegate(result)
-    }
-
-    return (
-        <>
-            <Select
-                label="Optimization"
-                value={props.delegate.optimization}
-                data={optimizations.map(item => item.name)}
-                onChange={onChangeOptimizationHandler}
-            />
-            <Space h="8" />
-            <Select
-                label="Contrast"
-                value={props.delegate.contrast}
-                placeholder="Pick Swatch Contrast"
-                data={['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16', 'HCT T%']}
-                onChange={onChangeContrastHandler}
-            />
-            <Space h="36" />
-            {props.model.values.map(item => {
-                return (
-                    <>
-                        <Chip onClick={() => onClick(item)}>
-                            <ChipGradientSwatch model={item}>
-                            {item.swatches.map(pip => 
-                                <Pip model={pip.hex}/>
-                            )}
-                            </ChipGradientSwatch>
-                            {item.semantic}
-                            <Icon><IconPencil size={18} /></Icon>
-                        </Chip>
-                        <Space h="sm" />
-                    </>
-                )
-            })}
-        </>
-    );
+  return (
+    <>
+      <Select
+        label="Optimization"
+        value={props.delegate.optimization}
+        data={optimizations.map((item) => item.name)}
+        onChange={onChangeOptimizationHandler}
+      />
+      <Space h="8" />
+      <Select
+        label="Contrast"
+        value={props.delegate.contrast}
+        placeholder="Pick Swatch Contrast"
+        data={['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16', 'HCT T%']}
+        onChange={onChangeContrastHandler}
+      />
+      <Space h="36" />
+      {props.model.values.map((item) => {
+        return (
+          <Fragment key={item.semantic}>
+            <Chip onClick={() => onClick(item)} key={item.semantic}>
+              <ChipGradientSwatch>
+                {item.swatches.map((pip) => (
+                  <Pip $model={pip.hex} key={pip.hex} />
+                ))}
+              </ChipGradientSwatch>
+              {item.semantic}
+              <Icon>
+                <IconPencil size={18} />
+              </Icon>
+            </Chip>
+            <Space h="sm" />
+          </Fragment>
+        );
+      })}
+    </>
+  );
 }
 
 const Icon = styled.div`
@@ -64,11 +66,11 @@ const Icon = styled.div`
   margin-right: 0;
 `;
 
-const Pip = styled.div`
-  height: 14px;
-  width: 14px;
-  background-color: ${(props) => props.model};
-`;
+const Pip = styled.div((props) => ({
+  backgroundColor: props.$model,
+  height: '14px',
+  width: '14px',
+}));
 
 const ChipGradientSwatch = styled.div`
   display: flex;
