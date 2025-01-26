@@ -1,10 +1,3 @@
-// Where is this used? - Frank
-type SemanticPaletteScale = {
-  index: number;
-  semantic: string;
-  keys: string[] | null;
-};
-
 // Shared Color interface
 interface Color {
   spaceId: string;
@@ -57,7 +50,7 @@ export interface Delegate {
   editing: BasePalette | null;
 }
 
-export interface ColorData {
+export interface PaletteConfig {
   index: number;
   semantic: string;
   keys: string[] | null;

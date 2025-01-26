@@ -4,9 +4,9 @@ import NavBar from '@/components/NavBar/NavBar';
 import PaletteView from '@/components/PaletteView/PaletteView';
 import SideNav from '../components/SideNav/SideNav';
 import PaletteModel from '../models/PaletteModel';
-import type { ColorData, Delegate, Model } from '../shared.types';
+import type { Delegate, Model, PaletteConfig } from '../shared.types';
 
-const data: ColorData[] = [
+const paletteSeed: PaletteConfig[] = [
   { index: 1, semantic: 'primary', keys: ['oklch(52.95% 0.1609 244.63)'] },
   { index: 2, semantic: 'secondary', keys: ['#867356', '#3a2f1e', '#cec6b9'] },
   { index: 3, semantic: 'positive', keys: ['#007c00'] },
@@ -23,7 +23,7 @@ export default function Create() {
     contrast: 'CIE L* (d65)',
     editing: null,
   });
-  const [model, setModel] = useState<Model>(new PaletteModel(data));
+  const [model, setModel] = useState<Model>(new PaletteModel(paletteSeed));
 
   if (!model) {
     return;
