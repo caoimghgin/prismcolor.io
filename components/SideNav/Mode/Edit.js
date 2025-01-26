@@ -49,6 +49,8 @@ export default function Main(props) {
     if (!editing) return;
     props.model.values[editing.id] = editing;
     props.setDelegate({ ...props.delegate, editing: null });
+    // console.log(props.model.values[editing.id].semantic);
+    // console.log(editing);
   };
 
   const onCancel = (event) => {
