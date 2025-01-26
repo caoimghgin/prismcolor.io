@@ -7,36 +7,21 @@ interface Props {
   setModel: any;
   delegate: any;
   setDelegate: any;
-  mode: any;
-  setMode: any;
 }
 
 export default function SideNav(props: Props) {
-  const { model, setModel, delegate, setDelegate, mode, setMode } = props;
+  const { model, setModel, delegate, setDelegate } = props;
 
   if (!props.delegate.editing) {
     return (
       <Wrapper>
-        <ViewMode
-          model={model}
-          delegate={delegate}
-          setDelegate={setDelegate}
-          mode={mode}
-          setMode={setMode}
-        />
+        <ViewMode model={model} delegate={delegate} setDelegate={setDelegate} />
       </Wrapper>
     );
   }
   return (
     <Wrapper>
-      <EditMode
-        model={model}
-        setModel={setModel}
-        delegate={delegate}
-        setDelegate={setDelegate}
-        mode={mode}
-        setMode={setMode}
-      />
+      <EditMode model={model} setModel={setModel} delegate={delegate} setDelegate={setDelegate} />
     </Wrapper>
   );
 }

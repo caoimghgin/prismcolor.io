@@ -4,8 +4,9 @@ import NavBar from '@/components/NavBar/NavBar';
 import PaletteView from '@/components/PaletteView/PaletteView';
 import SideNav from '../components/SideNav/SideNav';
 import PaletteModel from '../models/PaletteModel';
+import type { ColorData, Delegate, Model } from '../shared.types';
 
-const data = [
+const data: ColorData[] = [
   { index: 1, semantic: 'primary', keys: ['oklch(52.95% 0.1609 244.63)'] },
   { index: 2, semantic: 'secondary', keys: ['#867356', '#3a2f1e', '#cec6b9'] },
   { index: 3, semantic: 'positive', keys: ['#007c00'] },
@@ -17,13 +18,12 @@ const data = [
 ];
 
 export default function Create() {
-  const [delegate, setDelegate] = useState({
+  const [delegate, setDelegate] = useState<Delegate>({
     optimization: 'Universal',
     contrast: 'CIE L* (d65)',
     editing: null,
   });
-  const [model, setModel] = useState(new PaletteModel(data));
-  const [mode, setMode] = useState('Palette');
+  const [model, setModel] = useState<Model>(new PaletteModel(data));
 
   if (!model) {
     return;
@@ -39,12 +39,10 @@ export default function Create() {
             setModel={setModel}
             delegate={delegate}
             setDelegate={setDelegate}
-            mode={mode}
-            setMode={setMode}
           />
         </Left>
         <Right>
-          <PaletteView model={model} delegate={delegate} mode={mode} />
+          <PaletteView model={model} delegate={delegate} />
         </Right>
       </Main>
     </>
