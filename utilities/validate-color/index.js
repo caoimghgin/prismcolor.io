@@ -207,9 +207,12 @@ const optionalCommaOrRequiredSpace = `((${spaceNoneOrMore},${spaceNoneOrMore})|(
 const optionalDecimals = `((\\.${digitOneOrMore})?)`;
 const anyNumber = `(${digitNoneOrMore}${optionalDecimals})`;
 
+export const unsignedInteger = `\\d+`;
 export const unsignedFloat = `\\d(\\.\\d+)?`;
 export const signedFloat = `-?${unsignedFloat}`;
 export const unsignedFloatWithinOneHundred = `(100(\\.0+)?|[1-9]?${unsignedFloat})`;
+export const unsignedFloatWithinTwoHundredFiftyFive = `(255(\\.0+)?|[1-9]?${unsignedFloat})`;
+export const unsignedIntegerWithinTwoHundredFiftyFive = `(?:25[0-5]|2[0-4]\\d|1?\\d{1,2})`;
 export const unsignedFloatWithinThreeHundredSixty = `(360(\\.0+)?|[1-9]?${unsignedFloat})`;
 export const signedFloatWithinOneHundredTwentyFive = `(?:-?(?:\\d{1,2}(\\.\\d+)?|1[01]?\\d(\\.\\d+)?|120(\\.0+)?|125(\\.0+)?))`;
 export const isSignedFloatWithinOneHundredSixty = `(?:-?(?:\\d{1,2}(\\.\\d+)?|1[0-5]?\\d(\\.\\d+)?|160(\\.0+)?))`;
@@ -222,6 +225,18 @@ const alphaPercentageRequired = `(${hundredPercent}|(0?${optionalDecimals})|1)`;
 const endingWithAlphaPercentage = `${spaceNoneOrMore}\\)?)(${spaceNoneOrMore}(\\/?)${spaceOneOrMore}${alphaPercentage}${spaceNoneOrMore}\\)`;
 // const degRegex = `(-?${isAnyNumberWithinThreeHundredSixty}(deg)?)`;
 
+export const isValidCSSColorHex = (value) => {
+  if (isString(value)) {
+    const regexLogic = `#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{8})`;
+    const regex = new RegExp(`^${regexLogic}$`);
+    debugRegex && console.log('regex (hex)', regex);
+    return value && regex.test(value);
+  }
+  return false;
+};
+
+// /    const gap = `((${spaceNoneOrMore},?${spaceNoneOrMore})|(${spaceOneOrMore}))`;
+
 // * Validate HTML color 'rgb'
 // -- legacy notation
 // color: rgb(255, 255, 255);
@@ -230,18 +245,12 @@ const endingWithAlphaPercentage = `${spaceNoneOrMore}\\)?)(${spaceNoneOrMore}(\\
 // color: rgb(255 255 255);
 // color: rgb(255 255 255 / 1);
 // Note that 'rgba()' is now merged into 'rgb()'
-export const validateHTMLColorRgb = (color) => {
-  if (isString(color)) {
-    const letter = `${spaceNoneOrMore}${digitOneOrMore}%?${spaceNoneOrMore},?`;
-    const gap = `((${spaceNoneOrMore},?${spaceNoneOrMore})|(${spaceOneOrMore}))`;
-    const R = `${letter}${gap}`;
-    const G = `${letter}${gap}`;
-    const B = `${letter}${gap}`;
-    const A = `(\\/?${spaceNoneOrMore}(0?\\.?${digitOneOrMore}%?${spaceNoneOrMore})?|1|0)`;
-    const regexLogic = `^(rgb)a?\\(${R}${G}${B}(${A})?\\)$`;
-    const regex = new RegExp(regexLogic);
+export const isValidCSSColorRgb = (value) => {
+  if (isString(value)) {
+    const regexLogic = `^((rgb)a?\\(${spaceNoneOrMore}${unsignedIntegerWithinTwoHundredFiftyFive}${spaceOneOrMore}${unsignedIntegerWithinTwoHundredFiftyFive}${spaceOneOrMore}${unsignedIntegerWithinTwoHundredFiftyFive}${endingWithAlphaPercentage}$`;
+    const regex = new RegExp(`^${regexLogic}$`);
     debugRegex && console.log('regex (rgb)', regex);
-    return color && regex.test(color);
+    return value && regex.test(value);
   }
   return false;
 };
@@ -341,7 +350,7 @@ export const validateHTMLColorLch = (color) => {
 export const validateHTMLColor = (color) => {
   if (
     (color && validateHTMLColorHex(color)) ||
-    validateHTMLColorRgb(color) ||
+    isValidCSSColorRgb(color) ||
     validateHTMLColorHsl(color) ||
     validateHTMLColorHwb(color) ||
     validateCSSColorLab(color) ||
@@ -363,7 +372,7 @@ const validateColor = (color) => {
     (color && validateHTMLColorHex(color)) ||
     validateHTMLColorName(color) ||
     validateHTMLColorSpecialName(color) ||
-    validateHTMLColorRgb(color) ||
+    isValidCSSColorRgb(color) ||
     validateHTMLColorHsl(color) ||
     validateHTMLColorHwb(color) ||
     validateCSSColorLab(color) ||

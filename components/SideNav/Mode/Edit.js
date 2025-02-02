@@ -35,6 +35,8 @@ export default function Main(props) {
     result.push(props.delegate.editing.swatches.find((item) => item.isAnchor));
     if (result[0] === undefined) return [];
     result.push(swatches.filter((swatch) => swatch.isKey));
+    result.flat(1);
+    console.log('ORIGINAL ->', result);
     return result
       .flat(1)
       .map((swatch, index) => (index === 0 ? swatch.value.origin : swatch.value.destination));
