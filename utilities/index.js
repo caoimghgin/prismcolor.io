@@ -28,6 +28,7 @@ export const hexToRgb = (hex) => {
 };
 
 export const rgbToHex = (rgb) => {
+  // eslint-disable-next-line prefer-template
   return '#' + ((1 << 24) + (rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16).slice(1);
 };
 
@@ -43,6 +44,7 @@ export const luminanceToWeight = (luminance) => {
 };
 
 export const luminanceToTarget = (luminance) => {
+  // eslint-disable-next-line prefer-arrow-callback
   return targets.reduce(function (prev, curr) {
     return Math.abs(curr - luminance) < Math.abs(prev - luminance) ? curr : prev;
   });
