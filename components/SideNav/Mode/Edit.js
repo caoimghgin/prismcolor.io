@@ -3,6 +3,7 @@ import Color from 'colorjs.io';
 import { PlusCircle, Trash2, XCircle } from 'feather-icons-react';
 import styled from 'styled-components';
 import { Button, ColorInput, Divider, Select, Space, TextInput } from '@mantine/core';
+import ColorModel from '@/models/ColorModel';
 import { optimizations } from '@/models/OptimizationModel';
 import ScaleModel from '@/models/ScaleModel';
 import { usePaletteStore } from '../../../store/usePaletteStore';
@@ -55,28 +56,61 @@ export default function Main() {
     if (event.length === 7) {
       const newKeyValues = [...keyValues];
       newKeyValues[index] = event;
-      setKeyValues(newKeyValues);
 
-      const newSet = new ScaleModel(editing.id, editing.semantic, newKeyValues);
-      setEditing(newSet);
-      setDelegate({ ...delegate, editing: newSet });
+      try {
+        const validColors = newKeyValues.map((color) => new ColorModel(color));
+        const newSet = new ScaleModel(editing.id, editing.semantic, validColors);
+
+        // Update states immediately for real-time feedback
+        setKeyValues(newKeyValues);
+        setEditing(newSet);
+        setDelegate({ ...delegate, editing: newSet });
+      } catch (e) {
+        // Keep the previous valid state if there's an error
+        const prevValidColors = keyValues.map((color) => new ColorModel(color));
+        const prevSet = new ScaleModel(editing.id, editing.semantic, prevValidColors);
+        setEditing(prevSet);
+        setDelegate({ ...delegate, editing: prevSet });
+      }
     }
   };
 
   const onDeleteKeyValue = (index) => {
-    const newKeyValues = [...keyValues];
-    newKeyValues.splice(index, 1);
+    const newKeyValues = keyValues.filter((_, idx) => idx !== index);
 
-    const newSet = new ScaleModel(editing.id, editing.semantic, newKeyValues);
-    setEditing(newSet);
-    setDelegate({ ...delegate, editing: newSet });
+    try {
+      const validColors = newKeyValues.map((color) => new ColorModel(color));
+      const newSet = new ScaleModel(editing.id, editing.semantic, validColors);
+
+      setKeyValues(newKeyValues);
+      setEditing(newSet);
+      setDelegate({ ...delegate, editing: newSet });
+    } catch (e) {
+      // Revert to previous state if there's an error
+      const prevValidColors = keyValues.map((color) => new ColorModel(color));
+      const prevSet = new ScaleModel(editing.id, editing.semantic, prevValidColors);
+      setEditing(prevSet);
+      setDelegate({ ...delegate, editing: prevSet });
+    }
   };
 
   const onAddKey = () => {
     const newKeyValues = [...keyValues, '#FFFFFF'];
-    const newSet = new ScaleModel(editing.id, editing.semantic, newKeyValues);
-    setEditing(newSet);
-    setDelegate({ ...delegate, editing: newSet });
+
+    try {
+      const validColors = newKeyValues.map((color) => new ColorModel(color));
+      const newSet = new ScaleModel(editing.id, editing.semantic, validColors);
+
+      setKeyValues(newKeyValues);
+      setEditing(newSet);
+      setDelegate({ ...delegate, editing: newSet });
+    } catch (e) {
+      // Keep current state if there's an error
+      const prevValidColors = keyValues.map((color) => new ColorModel(color));
+      const prevSet = new ScaleModel(editing.id, editing.semantic, prevValidColors);
+      setEditing(prevSet);
+      setDelegate({ ...delegate, editing: prevSet });
+    }
   };
 
   const onChangeValue = (event) => {
@@ -134,7 +168,7 @@ export default function Main() {
 
         {keyValues.map((key, index) => {
           const parsedValue = Color.parse(key);
-          const defaultValue = new Color(parsedValue.spaceId, parsedValue.coords);
+          const defaultValue = new ColorModel(parsedValue.spaceId, parsedValue.coords);
           return (
             <React.Fragment key={index}>
               <KeyChip>
