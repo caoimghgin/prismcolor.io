@@ -8,36 +8,28 @@ import ScaleModel from '@/models/ScaleModel';
 import { usePaletteStore } from '../../../store/usePaletteStore';
 
 export default function Main() {
-  const { model, delegate, setDelegate } = usePaletteStore();
-  const [value, setValue] = useState();
-  const [editing, setEditing] = useState();
-  const [keyValues, setKeyValues] = useState();
+  const { model, delegate, setDelegate, setModel } = usePaletteStore();
+  const [value, setValue] = useState(delegate.editing?.semantic);
+  const [editing, setEditing] = useState(delegate.editing);
+  const [keyValues, setKeyValues] = useState(() => {
+    if (!delegate.editing) return [];
+    return parseKeyValues(delegate.editing.swatches);
+  });
 
   useEffect(() => {
     setEditing(delegate.editing);
-    setValue(delegate.editing.semantic);
-    setKeyValues(parseKeyValues(delegate.editing.swatches));
+    setValue(delegate.editing?.semantic);
+    if (delegate.editing) {
+      setKeyValues(parseKeyValues(delegate.editing.swatches));
+    }
   }, [delegate.editing]);
-
-  useEffect(() => {
-    if (!keyValues) return;
-    const newSet = new ScaleModel(editing.id, editing.semantic, keyValues);
-    setEditing(newSet);
-    setDelegate({ ...delegate, editing: newSet });
-  }, [keyValues]);
-
-  useEffect(() => {
-    if (!editing) return;
-    model.values[editing.id].semantic = value;
-  }, [value, model, editing]);
 
   function parseKeyValues(swatches) {
     const result = [];
-    result.push(delegate.editing.swatches.find((item) => item.isAnchor));
+    result.push(swatches.find((item) => item.isAnchor));
     if (result[0] === undefined) return [];
     result.push(swatches.filter((swatch) => swatch.isKey));
     result.flat(1);
-    console.log('ORIGINAL ->', result);
     return result
       .flat(1)
       .map((swatch, index) => (index === 0 ? swatch.value.origin : swatch.value.destination));
@@ -48,8 +40,10 @@ export default function Main() {
   };
 
   const onSave = () => {
-    if (!editing) return;
-    model.values[editing.id] = editing;
+    if (!editing || !model) return;
+    const newModel = { ...model };
+    newModel.values[editing.id] = editing;
+    setModel(newModel);
     setDelegate({ ...delegate, editing: null });
   };
 
@@ -58,38 +52,51 @@ export default function Main() {
   };
 
   const onUpdateKeyValues = (event, index) => {
-    console.log(event, index);
     if (event.length === 7) {
-      const result = keyValues;
-      result[index] = event;
-      setKeyValues([...result]);
+      const newKeyValues = [...keyValues];
+      newKeyValues[index] = event;
+      setKeyValues(newKeyValues);
+
+      const newSet = new ScaleModel(editing.id, editing.semantic, newKeyValues);
+      setEditing(newSet);
+      setDelegate({ ...delegate, editing: newSet });
     }
   };
 
   const onDeleteKeyValue = (index) => {
-    const result = keyValues;
-    result.splice(index, 1);
-    const newSet = new ScaleModel(editing.id, editing.semantic, result);
+    const newKeyValues = [...keyValues];
+    newKeyValues.splice(index, 1);
+
+    const newSet = new ScaleModel(editing.id, editing.semantic, newKeyValues);
     setEditing(newSet);
     setDelegate({ ...delegate, editing: newSet });
   };
 
   const onAddKey = () => {
-    const result = keyValues;
-    result.push('#FFFFFF');
-    const newSet = new ScaleModel(editing.id, editing.semantic, result);
+    const newKeyValues = [...keyValues, '#FFFFFF'];
+    const newSet = new ScaleModel(editing.id, editing.semantic, newKeyValues);
     setEditing(newSet);
     setDelegate({ ...delegate, editing: newSet });
   };
 
-  if (!editing) return;
+  const onChangeValue = (event) => {
+    const newValue = event.currentTarget.value;
+    setValue(newValue);
+    if (editing && model?.values) {
+      const newEditing = { ...editing };
+      newEditing.semantic = newValue;
+      setEditing(newEditing);
+    }
+  };
+
+  if (!editing) return null;
 
   return (
     <>
-      <Button size="xs" color="#0070c1" onClick={() => onSave()}>
+      <Button size="xs" color="#0070c1" onClick={onSave}>
         Save
       </Button>
-      <Button ml="sm" variant="default" size="xs" color="#0070c1" onClick={() => onCancel()}>
+      <Button ml="sm" variant="default" size="xs" color="#0070c1" onClick={onCancel}>
         Cancel
       </Button>
       <Divider my="md" />
@@ -109,11 +116,7 @@ export default function Main() {
               <Pip $model={pip.hex} key={pip.hex} />
             ))}
           </ChipGradientSwatch>
-          <TextInput
-            size="xsm"
-            value={value}
-            onChange={(event) => setValue(event.currentTarget.value)}
-          />
+          <TextInput size="xsm" value={value} onChange={onChangeValue} />
         </Chip>
         <Space h="sm" />
         <Divider my="md" />
@@ -123,7 +126,7 @@ export default function Main() {
             <KeysHeader>
               <XCircle size={20} />
               <Space w={8} />
-              <PlusCircle size={20} onClick={() => onAddKey()} />
+              <PlusCircle size={20} onClick={onAddKey} />
             </KeysHeader>
           </KeysHeader>
         </>
@@ -140,15 +143,13 @@ export default function Main() {
                   onChange={(event) => onUpdateKeyValues(event, index)}
                   mr={8}
                 />
-                <Trash2 size={18} onClick={(event) => onDeleteKeyValue(index)} />
+                <Trash2 size={18} onClick={() => onDeleteKeyValue(index)} />
               </KeyChip>
               <Space h={12} />
             </React.Fragment>
           );
         })}
-        <Space h="sm" />
       </>
-      <Space h="sm" />
     </>
   );
 }

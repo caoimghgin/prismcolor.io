@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import PaletteModel from '../models/PaletteModel';
 import type { Delegate, Model } from '../shared.types';
 
 interface PaletteStore {

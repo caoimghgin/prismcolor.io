@@ -1,10 +1,7 @@
 import styled from 'styled-components';
-import { usePaletteStore } from '../../store/usePaletteStore';
 import Scale from './Scale';
 
 export default function ScaleGroupView({ model: scaleModel }) {
-  const { delegate } = usePaletteStore();
-
   if (!scaleModel) return null;
 
   return (
@@ -22,22 +19,22 @@ export default function ScaleGroupView({ model: scaleModel }) {
     </Title>
   );
 }
+
 const Title = styled.div`
   font-weight: 500;
   font-size: 14px;
 `;
 
 const Container = styled.div`
-    display: flex;
-    width: 980px;
-    height:220px
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid #d4d4d4;
+  display: flex;
+  width: 980px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #d4d4d4;
 `;
 
 const Wrapper = styled.div`

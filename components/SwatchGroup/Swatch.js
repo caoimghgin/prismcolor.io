@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AlertTriangle, Anchor, Key, Lock } from 'feather-icons-react';
 import styled from 'styled-components';
 import { optimizations } from '../../models/OptimizationModel.js';
@@ -7,33 +7,27 @@ import { swatchFrgColor } from '../../utilities/index.js';
 
 export default function SwatchView({ model: swatchModel }) {
   const { delegate } = usePaletteStore();
-  const [model, setModel] = useState();
 
-  useEffect(() => {
-    if (!swatchModel) return;
-    setModel({ ...swatchModel, delegate: delegate });
-  }, [swatchModel, delegate]);
+  if (!swatchModel || !delegate) {
+    return null;
+  }
 
   const onClickHandler = () => {
-    navigator.clipboard.writeText(model.hex);
+    navigator.clipboard.writeText(swatchModel.hex);
   };
 
-  if (!model) return null;
-  return render(model, delegate, onClickHandler);
+  return render(swatchModel, delegate, onClickHandler);
 }
 
 const render = (model, delegate, onClickHandler) => {
-  if (!model) {
-    return;
-  }
+  if (!model) return null;
 
   const optimizationType = optimizations.find((item) => item.name === delegate.optimization);
-  const optimizedValue = optimizationType.values.find(
+  const optimizedValue = optimizationType?.values.find(
     (item) => item.universalWeight === parseFloat(model.weight)
   );
-  if (!optimizedValue.weight) {
-    return;
-  }
+
+  if (!optimizedValue?.weight) return null;
 
   return (
     <Wrapper>
@@ -150,25 +144,16 @@ const TopSection = styled.div`
   padding-right: 8px;
   padding-left: 8px;
   padding-top: 2px;
-  // border: ${(props) =>
-    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const TopSectionLeft = styled.div`
   padding-top: 2px;
-  // border: ${(props) =>
-    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
-const TopSectionMiddle = styled.div`
-  // border: ${(props) =>
-    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
-`;
+const TopSectionMiddle = styled.div``;
 
 const TopSectionRight = styled.div`
   padding-top: 1.5px;
-  // border: ${(props) =>
-    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const MiddleSection = styled.div`
@@ -178,8 +163,6 @@ const MiddleSection = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: -5px;
-  // border: ${(props) =>
-    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;
 
 const BottomSection = styled.div`
@@ -191,6 +174,4 @@ const BottomSection = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  // border: ${(props) =>
-    props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : '1px solid #E2E2E2'};
 `;

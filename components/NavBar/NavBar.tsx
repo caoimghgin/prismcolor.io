@@ -7,7 +7,15 @@ import { usePaletteStore } from '../../store/usePaletteStore';
 import NavBarMenu from './NavBarMenu';
 
 export default function NavBar() {
-  const { model } = usePaletteStore();
+  const { model, delegate } = usePaletteStore();
+
+  function downloadAction({ model }: any) {
+    const selection = { optimization: delegate.optimization, ...model };
+    const data = { optimizations, selection };
+    const json = JSON.stringify(data, null, 4);
+    const blob = new Blob([json], { type: 'application/json' });
+    downloadBlob(blob);
+  }
 
   return (
     <Wrapper>
@@ -25,15 +33,6 @@ export default function NavBar() {
       </ButtonGroup>
     </Wrapper>
   );
-}
-
-function downloadAction({ model }: any) {
-  const { delegate } = usePaletteStore();
-  const selection = { optimization: delegate.optimization, ...model };
-  const data = { optimizations, selection };
-  const json = JSON.stringify(data, null, 4);
-  const blob = new Blob([json], { type: 'application/json' });
-  downloadBlob(blob);
 }
 
 function downloadBlob(blob: any, name = 'prismColorPalette.json') {
