@@ -171,10 +171,13 @@ const KeyChip = styled.div`
   align-items: center;
 `;
 
-const Pip = styled.div`
+const Pip = styled.div.attrs((props) => ({
+  style: {
+    backgroundColor: props.$model,
+  },
+}))`
   height: 14px;
   width: 14px;
-  background-color: ${(props) => props.$model};
 `;
 
 const ChipGradientSwatch = styled.div`

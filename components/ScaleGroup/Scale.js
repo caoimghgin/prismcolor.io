@@ -15,7 +15,6 @@ export default function ScaleView({ model: scaleModel }) {
   }
 
   const onClickHandler = () => {
-    console.table(scaleModel);
     navigator.clipboard.writeText(scaleModel.hex);
   };
 
@@ -23,7 +22,9 @@ export default function ScaleView({ model: scaleModel }) {
 }
 
 const render = (model, delegate, onClickHandler) => {
-  if (!model) return null;
+  if (!model) {
+    return null;
+  }
 
   const optimizationType = optimizations.find((item) => item.name === delegate.optimization);
   const optimizedValue = optimizationType?.values.find(
@@ -52,9 +53,15 @@ const render = (model, delegate, onClickHandler) => {
 };
 
 const getSymbols = (model) => {
-  if (model.isAnchor) return <Anchor size={size} />;
-  if (model.isLock) return <Lock size={size} />;
-  if (model.isKey) return <Key size={size} />;
+  if (model.isAnchor) {
+    return <Anchor size={size} />;
+  }
+  if (model.isLock) {
+    return <Lock size={size} />;
+  }
+  if (model.isKey) {
+    return <Key size={size} />;
+  }
   return null;
 };
 
@@ -83,27 +90,24 @@ const UniversLabel = styled.div`
   margin-top: 4px;
 `;
 
-const Swatch = styled.div`
+const Swatch = styled.div.attrs((props) => ({
+  style: {
+    background: props.$isDisabled
+      ? 'repeating-linear-gradient(-45deg, #f1f1f1, #f1f1f1 9px, #e3e3e3 9px, #e3e3e3 18px)'
+      : props.$model.value.destination,
+    color: swatchFrgColor(props.$delegate, props.$model),
+    opacity: props.$isDisabled ? '0.5' : '1',
+    border: props.$model.lab_d65_l > 99 ? '1px solid #f1f1f1' : 'none',
+  },
+}))`
   width: 40px;
   min-width: 40px;
   height: 72px;
   min-height: 72px;
-  background: ${(props) => props.$model.value.destination};
-  color: ${(props) => swatchFrgColor(props.$delegate, props.$model)};
   display: flex;
   align-items: center;
   justify-content: center;
-  border: ${(props) => (props.$model.lab_d65_l > 99 ? '1px solid #f1f1f1' : 'none')};
   cursor: pointer;
-  opacity: ${(props) => (props.$isDisabled ? '0.5' : '1')};
-  background: ${(props) =>
-    props.$isDisabled
-      ? 'repeating-linear-gradient(-45deg, #f1f1f1, #f1f1f1 9px, #e3e3e3 9px, #e3e3e3 18px)'
-      : props.$model.value.destination};
-  transition: transform 0.2s ease;
-  &:hover {
-    transform: ${(props) => (props.$isDisabled ? 'none' : 'scale(1.05)')};
-  }
 `;
 
 const TopSection = styled.div`
