@@ -121,16 +121,19 @@ const Wrapper = styled.div`
   font-family: 'Helvetica';
 `;
 
-const Swatch = styled.div`
+const Swatch = styled.div.attrs((props) => ({
+  style: {
+    background: props.$model.value.destination,
+    color: swatchFrgColor(props.$delegate, props.$model),
+    border: props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : undefined,
+  },
+}))`
   width: 72px;
   min-width: 72px;
   height: 72px;
   min-height: 72px;
-  background: ${(props) => props.$model.value.destination};
-  color: ${(props) => swatchFrgColor(props.$delegate, props.$model)};
   border-radius: 8px;
   margin: 0px 16px 8px 0px;
-  border: ${(props) => (props.$model.lab_d65_l > 90 ? '1px solid #E2E2E2' : null)};
 `;
 
 const TopSection = styled.div`

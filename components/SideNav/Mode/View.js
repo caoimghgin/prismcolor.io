@@ -65,11 +65,14 @@ const Icon = styled.div`
   margin-right: 0;
 `;
 
-const Pip = styled.div((props) => ({
-  backgroundColor: props.$model,
-  height: '14px',
-  width: '14px',
-}));
+const Pip = styled.div.attrs((props) => ({
+  style: {
+    backgroundColor: props.$model,
+  },
+}))`
+  height: 14px;
+  width: 14px;
+`;
 
 const ChipGradientSwatch = styled.div`
   display: flex;
