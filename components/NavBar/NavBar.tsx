@@ -3,12 +3,12 @@ import { IconDownload } from '@tabler/icons-react';
 import styled from 'styled-components';
 import { Button } from '@mantine/core';
 import { optimizations } from '@/models/OptimizationModel';
+import { usePaletteStore } from '../../store/usePaletteStore';
 import NavBarMenu from './NavBarMenu';
 
-export default function NavBar(props: any) {
-  if (!props.model) {
-    return;
-  }
+export default function NavBar() {
+  const { model } = usePaletteStore();
+
   return (
     <Wrapper>
       <Image src="images/logo.svg" width={130} height={34} alt="PrismColor Logo" />
@@ -18,7 +18,7 @@ export default function NavBar(props: any) {
           rightSection={<IconDownload size={18} />}
           size="xs"
           color="#0070c1"
-          onClick={() => downloadAction(props)}
+          onClick={() => downloadAction({ model })}
         >
           Download
         </Button>
@@ -27,8 +27,8 @@ export default function NavBar(props: any) {
   );
 }
 
-function downloadAction(props: any) {
-  const { model, delegate } = props;
+function downloadAction({ model }: any) {
+  const { delegate } = usePaletteStore();
   const selection = { optimization: delegate.optimization, ...model };
   const data = { optimizations, selection };
   const json = JSON.stringify(data, null, 4);

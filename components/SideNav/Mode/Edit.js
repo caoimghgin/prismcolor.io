@@ -5,34 +5,35 @@ import styled from 'styled-components';
 import { Button, ColorInput, Divider, Select, Space, TextInput } from '@mantine/core';
 import { optimizations } from '@/models/OptimizationModel';
 import ScaleModel from '@/models/ScaleModel';
+import { usePaletteStore } from '../../../store/usePaletteStore';
 
-export default function Main(props) {
+export default function Main() {
+  const { model, delegate, setDelegate } = usePaletteStore();
   const [value, setValue] = useState();
   const [editing, setEditing] = useState();
   const [keyValues, setKeyValues] = useState();
 
   useEffect(() => {
-    setEditing(props.delegate.editing);
-    setValue(props.delegate.editing.semantic);
-    setKeyValues(parseKeyValues(props.delegate.editing.swatches));
-  }, []);
+    setEditing(delegate.editing);
+    setValue(delegate.editing.semantic);
+    setKeyValues(parseKeyValues(delegate.editing.swatches));
+  }, [delegate.editing]);
 
   useEffect(() => {
     if (!keyValues) return;
     const newSet = new ScaleModel(editing.id, editing.semantic, keyValues);
     setEditing(newSet);
-    props.setDelegate({ ...props.delegate, editing: newSet });
-    console.log(keyValues);
+    setDelegate({ ...delegate, editing: newSet });
   }, [keyValues]);
 
   useEffect(() => {
     if (!editing) return;
-    props.model.values[editing.id].semantic = value;
-  }, [value]);
+    model.values[editing.id].semantic = value;
+  }, [value, model, editing]);
 
   function parseKeyValues(swatches) {
     const result = [];
-    result.push(props.delegate.editing.swatches.find((item) => item.isAnchor));
+    result.push(delegate.editing.swatches.find((item) => item.isAnchor));
     if (result[0] === undefined) return [];
     result.push(swatches.filter((swatch) => swatch.isKey));
     result.flat(1);
@@ -43,20 +44,17 @@ export default function Main(props) {
   }
 
   const onChangeOptimizationHandler = (optimization) => {
-    const result = { ...props.delegate, optimization: optimization };
-    props.setDelegate(result);
+    setDelegate({ ...delegate, optimization });
   };
 
-  const onSave = (event) => {
+  const onSave = () => {
     if (!editing) return;
-    props.model.values[editing.id] = editing;
-    props.setDelegate({ ...props.delegate, editing: null });
-    // console.log(props.model.values[editing.id].semantic);
-    // console.log(editing);
+    model.values[editing.id] = editing;
+    setDelegate({ ...delegate, editing: null });
   };
 
-  const onCancel = (event) => {
-    props.setDelegate({ ...props.delegate, editing: null });
+  const onCancel = () => {
+    setDelegate({ ...delegate, editing: null });
   };
 
   const onUpdateKeyValues = (event, index) => {
@@ -73,7 +71,7 @@ export default function Main(props) {
     result.splice(index, 1);
     const newSet = new ScaleModel(editing.id, editing.semantic, result);
     setEditing(newSet);
-    props.setDelegate({ ...props.delegate, editing: newSet });
+    setDelegate({ ...delegate, editing: newSet });
   };
 
   const onAddKey = () => {
@@ -81,7 +79,7 @@ export default function Main(props) {
     result.push('#FFFFFF');
     const newSet = new ScaleModel(editing.id, editing.semantic, result);
     setEditing(newSet);
-    props.setDelegate({ ...props.delegate, editing: newSet });
+    setDelegate({ ...delegate, editing: newSet });
   };
 
   if (!editing) return;
@@ -99,7 +97,7 @@ export default function Main(props) {
 
       <Select
         label="Optimization"
-        value={props.delegate.optimization}
+        value={delegate.optimization}
         data={optimizations.map((item) => item.name)}
         onChange={onChangeOptimizationHandler}
       />

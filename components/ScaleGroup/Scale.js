@@ -2,23 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Anchor, EyeOff, Key, Lock } from 'feather-icons-react';
 import styled from 'styled-components';
 import { optimizations } from '../../models/OptimizationModel.js';
+import { usePaletteStore } from '../../store/usePaletteStore';
 import { swatchFrgColor } from '../../utilities/index.js';
 
-const size = 14;
-
-export default function SwatchView(props) {
+export default function SwatchView({ model: scaleModel }) {
+  const { delegate } = usePaletteStore();
   const [model, setModel] = useState();
 
   useEffect(() => {
-    if (!props.model || !props.delegate) return;
-    setModel({ ...props.model, delegate: props.delegate.editing });
-  }, [props.model, props.delegate]);
+    if (!scaleModel) return;
+    setModel({ ...scaleModel, delegate: delegate.editing });
+  }, [scaleModel, delegate]);
 
   const onClickHandler = () => {
     console.table(model);
     navigator.clipboard.writeText(model.hex);
   };
-  return render(model, props.delegate, onClickHandler);
+
+  if (!model) return null;
+  return render(model, delegate, onClickHandler);
 }
 
 const render = (model, delegate, onClickHandler) => {

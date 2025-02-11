@@ -2,22 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { AlertTriangle, Anchor, Key, Lock } from 'feather-icons-react';
 import styled from 'styled-components';
 import { optimizations } from '../../models/OptimizationModel.js';
+import { usePaletteStore } from '../../store/usePaletteStore';
 import { swatchFrgColor } from '../../utilities/index.js';
 
-export default function SwatchView(props) {
-  if (!props.model || !props.delegate) {
-    return;
-  }
+export default function SwatchView({ model: swatchModel }) {
+  const { delegate } = usePaletteStore();
   const [model, setModel] = useState();
 
   useEffect(() => {
-    setModel({ ...props.model, delegate: props.delegate });
-  }, [props.model, props.delegate]);
+    if (!swatchModel) return;
+    setModel({ ...swatchModel, delegate: delegate });
+  }, [swatchModel, delegate]);
 
   const onClickHandler = () => {
     navigator.clipboard.writeText(model.hex);
   };
-  return render(model, props.delegate, onClickHandler);
+
+  if (!model) return null;
+  return render(model, delegate, onClickHandler);
 }
 
 const render = (model, delegate, onClickHandler) => {
