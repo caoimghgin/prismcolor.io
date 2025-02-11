@@ -5,6 +5,8 @@ import { optimizations } from '../../models/OptimizationModel.js';
 import { usePaletteStore } from '../../store/usePaletteStore';
 import { swatchFrgColor } from '../../utilities/index.js';
 
+const size = 14;
+
 export default function SwatchView({ model: scaleModel }) {
   const { delegate } = usePaletteStore();
   const [model, setModel] = useState();
