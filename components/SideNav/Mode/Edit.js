@@ -20,9 +20,6 @@ export default function Main() {
   useEffect(() => {
     setEditing(delegate.editing);
     setValue(delegate.editing?.semantic);
-    if (delegate.editing) {
-      setKeyValues(parseKeyValues(delegate.editing.swatches));
-    }
   }, [delegate.editing]);
 
   function parseKeyValues(swatches) {
@@ -52,10 +49,11 @@ export default function Main() {
     setDelegate({ ...delegate, editing: null });
   };
 
-  const onUpdateKeyValues = (event, index) => {
-    if (event.length === 7) {
+  function onUpdateKeyValues(newColor, index) {
+    if (newColor.length === 7) {
+      // ensure newColor is a hex string
       const newKeyValues = [...keyValues];
-      newKeyValues[index] = event;
+      newKeyValues[index] = newColor;
 
       try {
         const validColors = newKeyValues.map((color) => new ColorModel(color));
@@ -73,7 +71,7 @@ export default function Main() {
         setDelegate({ ...delegate, editing: prevSet });
       }
     }
-  };
+  }
 
   const onDeleteKeyValue = (index) => {
     const newKeyValues = keyValues.filter((_, idx) => idx !== index);
@@ -174,7 +172,7 @@ export default function Main() {
               <KeyChip>
                 <ColorInput
                   value={defaultValue.toString({ format: 'hex' })}
-                  onChange={(event) => onUpdateKeyValues(event, index)}
+                  onChange={(newColor) => onUpdateKeyValues(newColor, index)}
                   mr={8}
                 />
                 <Trash2 size={18} onClick={() => onDeleteKeyValue(index)} />
