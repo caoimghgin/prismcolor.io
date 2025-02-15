@@ -1,8 +1,10 @@
+/* eslint-disable curly */
 import React, { useEffect, useState } from 'react';
 import Color from 'colorjs.io';
 import { PlusCircle, Trash2, XCircle } from 'feather-icons-react';
 import styled from 'styled-components';
 import { Button, ColorInput, Divider, Select, Space, TextInput } from '@mantine/core';
+import isValid from '@/extensions/colorjs.io/isValid.js';
 import ColorModel from '@/models/ColorModel';
 import { optimizations } from '@/models/OptimizationModel';
 import ScaleModel from '@/models/ScaleModel';
@@ -50,26 +52,15 @@ export default function Main() {
   };
 
   function onUpdateKeyValues(newColor, index) {
-    if (newColor.length === 7) {
-      // ensure newColor is a hex string
-      const newKeyValues = [...keyValues];
-      newKeyValues[index] = newColor;
-
-      try {
-        const validColors = newKeyValues.map((color) => new ColorModel(color));
-        const newSet = new ScaleModel(editing.id, editing.semantic, validColors);
-
-        // Update states immediately for real-time feedback
-        setKeyValues(newKeyValues);
-        setEditing(newSet);
-        setDelegate({ ...delegate, editing: newSet });
-      } catch (e) {
-        // Keep the previous valid state if there's an error
-        const prevValidColors = keyValues.map((color) => new ColorModel(color));
-        const prevSet = new ScaleModel(editing.id, editing.semantic, prevValidColors);
-        setEditing(prevSet);
-        setDelegate({ ...delegate, editing: prevSet });
-      }
+    const newKeyValues = [...keyValues];
+    newKeyValues[index] = newColor;
+    setKeyValues(newKeyValues);
+    if (isValid(newKeyValues[index])) {
+      setEditing(new ScaleModel(editing.id, editing.semantic, newKeyValues));
+      setDelegate({
+        ...delegate,
+        editing: new ScaleModel(editing.id, editing.semantic, newKeyValues),
+      });
     }
   }
 
@@ -165,13 +156,16 @@ export default function Main() {
         <Space h={16} />
 
         {keyValues.map((key, index) => {
-          const parsedValue = Color.parse(key);
-          const defaultValue = new ColorModel(parsedValue.spaceId, parsedValue.coords);
+          let newValue = key;
+          if (isValid(key)) {
+            const parsedValue = Color.parse(key);
+            newValue = new ColorModel(parsedValue.spaceId, parsedValue.coords).as('hex');
+          }
           return (
             <React.Fragment key={index}>
               <KeyChip>
                 <ColorInput
-                  value={defaultValue.toString({ format: 'hex' })}
+                  value={newValue}
                   onChange={(newColor) => onUpdateKeyValues(newColor, index)}
                   mr={8}
                 />

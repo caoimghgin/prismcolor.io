@@ -1,4 +1,4 @@
-import isValid from './utilities/validate-color/isValid.js';
+import isValid from './extensions/colorjs.io/isValid.js';
 
 function main() {
   console.log('Hello, World!');
