@@ -3,12 +3,20 @@ import { IconDownload } from '@tabler/icons-react';
 import styled from 'styled-components';
 import { Button } from '@mantine/core';
 import { optimizations } from '@/models/OptimizationModel';
+import { usePaletteStore } from '../../store/usePaletteStore';
 import NavBarMenu from './NavBarMenu';
 
-export default function NavBar(props: any) {
-  if (!props.model) {
-    return;
+export default function NavBar() {
+  const { model, delegate } = usePaletteStore();
+
+  function downloadAction({ model }: any) {
+    const selection = { optimization: delegate.optimization, ...model };
+    const data = { optimizations, selection };
+    const json = JSON.stringify(data, null, 4);
+    const blob = new Blob([json], { type: 'application/json' });
+    downloadBlob(blob);
   }
+
   return (
     <Wrapper>
       <Image src="images/logo.svg" width={130} height={34} alt="PrismColor Logo" />
@@ -18,22 +26,13 @@ export default function NavBar(props: any) {
           rightSection={<IconDownload size={18} />}
           size="xs"
           color="#0070c1"
-          onClick={() => downloadAction(props)}
+          onClick={() => downloadAction({ model })}
         >
           Download
         </Button>
       </ButtonGroup>
     </Wrapper>
   );
-}
-
-function downloadAction(props: any) {
-  const { model, delegate } = props;
-  const selection = { optimization: delegate.optimization, ...model };
-  const data = { optimizations, selection };
-  const json = JSON.stringify(data, null, 4);
-  const blob = new Blob([json], { type: 'application/json' });
-  downloadBlob(blob);
 }
 
 function downloadBlob(blob: any, name = 'prismColorPalette.json') {

@@ -1,27 +1,21 @@
 import styled from 'styled-components';
+import { usePaletteStore } from '../../store/usePaletteStore';
 import EditMode from './Mode/Edit.js';
 import ViewMode from './Mode/View.js';
 
-interface Props {
-  model: any;
-  setModel: any;
-  delegate: any;
-  setDelegate: any;
-}
+export default function SideNav() {
+  const { delegate } = usePaletteStore();
 
-export default function SideNav(props: Props) {
-  const { model, setModel, delegate, setDelegate } = props;
-
-  if (!props.delegate.editing) {
+  if (!delegate.editing) {
     return (
       <Wrapper>
-        <ViewMode model={model} delegate={delegate} setDelegate={setDelegate} />
+        <ViewMode />
       </Wrapper>
     );
   }
   return (
     <Wrapper>
-      <EditMode model={model} setModel={setModel} delegate={delegate} setDelegate={setDelegate} />
+      <EditMode />
     </Wrapper>
   );
 }

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import NavBar from '@/components/NavBar/NavBar';
 import PaletteView from '@/components/PaletteView/PaletteView';
 import SideNav from '../components/SideNav/SideNav';
 import PaletteModel from '../models/PaletteModel';
-import type { Delegate, Model, PaletteConfig } from '../shared.types';
+import type { PaletteConfig } from '../shared.types';
+import { usePaletteStore } from '../store/usePaletteStore';
 
 const paletteSeed: PaletteConfig[] = [
   { index: 1, semantic: 'primary', keys: ['oklch(52.95% 0.1609 244.63)'] },
@@ -18,31 +19,22 @@ const paletteSeed: PaletteConfig[] = [
 ];
 
 export default function Create() {
-  const [delegate, setDelegate] = useState<Delegate>({
-    optimization: 'Universal',
-    contrast: 'CIE L* (d65)',
-    editing: null,
-  });
-  const [model, setModel] = useState<Model>(new PaletteModel(paletteSeed));
+  const { setModel } = usePaletteStore();
 
-  if (!model) {
-    return;
-  }
+  // Initialize the model on component mount
+  useEffect(() => {
+    setModel(new PaletteModel(paletteSeed));
+  }, [setModel]);
 
   return (
     <>
-      <NavBar model={model} delegate={delegate} />
+      <NavBar />
       <Main>
         <Left>
-          <SideNav
-            model={model}
-            setModel={setModel}
-            delegate={delegate}
-            setDelegate={setDelegate}
-          />
+          <SideNav />
         </Left>
         <Right>
-          <PaletteView model={model} delegate={delegate} />
+          <PaletteView />
         </Right>
       </Main>
     </>

@@ -1,9 +1,17 @@
-import ModeEdit from './Mode/Edit.js';
-import ModeView from './Mode/View.js';
+import { usePaletteStore } from '../../store/usePaletteStore';
+import EditMode from './Mode/Edit';
+import ViewMode from './Mode/View';
 
-export default function PaletteView(props: any) {
-  if (!props) return;
-  const { model, delegate, mode } = props;
-  if (props.delegate.editing) return <ModeEdit model={model} delegate={delegate} />;
-  return <ModeView model={model} delegate={delegate} />;
+export default function PaletteView() {
+  const { model, delegate } = usePaletteStore();
+
+  if (!model) return null;
+
+  // Show edit mode when a scale is being edited
+  if (delegate.editing) {
+    return <EditMode />;
+  }
+
+  // Otherwise show view mode with all scales
+  return <ViewMode />;
 }

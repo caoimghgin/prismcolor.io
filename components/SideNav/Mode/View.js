@@ -5,42 +5,42 @@ import { IconPencil } from '@tabler/icons-react';
 import styled from 'styled-components';
 import { Select, Space } from '@mantine/core';
 import { optimizations } from '../../../models/OptimizationModel';
+import { usePaletteStore } from '../../../store/usePaletteStore';
 
-export default function Main(props) {
+export default function Main() {
+  const { delegate, setDelegate, model } = usePaletteStore();
+
   const onChangeContrastHandler = (contrast) => {
-    const result = { ...props.delegate, contrast };
-    props.setDelegate(result);
+    setDelegate({ ...delegate, contrast });
   };
 
   const onChangeOptimizationHandler = (optimization) => {
-    const result = { ...props.delegate, optimization };
-    props.setDelegate(result);
+    setDelegate({ ...delegate, optimization });
   };
 
   const onClick = (value) => {
-    const result = { ...props.delegate, editing: value };
-    props.setDelegate(result);
+    setDelegate({ ...delegate, editing: value });
   };
 
   return (
     <>
       <Select
         label="Optimization"
-        value={props.delegate.optimization}
+        value={delegate.optimization}
         data={optimizations.map((item) => item.name)}
         onChange={onChangeOptimizationHandler}
       />
       <Space h="8" />
       <Select
         label="Contrast"
-        value={props.delegate.contrast}
+        value={delegate.contrast}
         placeholder="Pick Swatch Contrast"
         data={['CIE L* (d65)', 'WCAG21', 'APCA', 'Ok L*', 'CAM16', 'HCT T%']}
         onChange={onChangeContrastHandler}
       />
       <Space h="36" />
-      {props.model.values.map((item) => {
-        return (
+      {model &&
+        model.values.map((item) => (
           <Fragment key={item.semantic}>
             <Chip onClick={() => onClick(item)} key={item.semantic}>
               <ChipGradientSwatch>
@@ -55,8 +55,7 @@ export default function Main(props) {
             </Chip>
             <Space h="sm" />
           </Fragment>
-        );
-      })}
+        ))}
     </>
   );
 }
@@ -66,11 +65,14 @@ const Icon = styled.div`
   margin-right: 0;
 `;
 
-const Pip = styled.div((props) => ({
-  backgroundColor: props.$model,
-  height: '14px',
-  width: '14px',
-}));
+const Pip = styled.div.attrs((props) => ({
+  style: {
+    backgroundColor: props.$model,
+  },
+}))`
+  height: 14px;
+  width: 14px;
+`;
 
 const ChipGradientSwatch = styled.div`
   display: flex;
