@@ -11,9 +11,9 @@ export default function Main() {
 }
 
 const Wrapper = styled.div`
-  border: 1px solid #e3e3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   margin: 16px;
-  background: #ffffff;
-  flex-grow: 1;
 `;
