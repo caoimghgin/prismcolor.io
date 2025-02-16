@@ -13,12 +13,14 @@ export default function SwatchGroupView() {
     <div>
       {model.values.map((value) => (
         <Container key={value.semantic}>
-          <Title>{value.semantic}</Title>
-          <Main className="ScaleView">
-            {value.swatches.map((swatchModel, index) => (
-              <Swatch key={`${value.semantic}-${index}`} model={swatchModel} />
-            ))}
-          </Main>
+          <Wrapper>
+            <Title>{value.semantic}</Title>
+            <Main className="ScaleView">
+              {value.swatches.map((swatchModel, index) => (
+                <Swatch key={`${value.semantic}-${index}`} model={swatchModel} />
+              ))}
+            </Main>
+          </Wrapper>
         </Container>
       ))}
     </div>
@@ -26,8 +28,25 @@ export default function SwatchGroupView() {
 }
 
 const Container = styled.div`
+  // display: flex;
+  // width: 575px;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  // align-items: center;
+  // background-color: #ffffff;
+  // border-radius: 8px;
+  // border: 1px solid #d4d4d4;
+`;
+
+const Wrapper = styled.div`
   margin: 16px;
+  padding: 24px 0px 24px 24px;
   display: flex;
+  width: 600px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #d4d4d4;
 `;
 
 const Title = styled.div`
