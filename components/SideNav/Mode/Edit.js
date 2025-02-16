@@ -55,7 +55,7 @@ export default function Main() {
     const newKeyValues = [...keyValues];
     newKeyValues[index] = newColor;
     setKeyValues(newKeyValues);
-    if (isValid(newKeyValues[index])) {
+    if (isValid(newKeyValues[index]) && newKeyValues[index].length >= 7) {
       setEditing(new ScaleModel(editing.id, editing.semantic, newKeyValues));
       setDelegate({
         ...delegate,
@@ -157,7 +157,7 @@ export default function Main() {
 
         {keyValues.map((key, index) => {
           let newValue = key;
-          if (isValid(key)) {
+          if (isValid(key) && key.length >= 7) {
             const parsedValue = Color.parse(key);
             newValue = new ColorModel(parsedValue.spaceId, parsedValue.coords).as('hex');
           }
