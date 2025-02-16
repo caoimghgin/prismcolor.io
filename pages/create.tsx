@@ -27,32 +27,51 @@ export default function Create() {
   }, [setModel]);
 
   return (
-    <>
-      <NavBar />
-      <Main>
+    <Container>
+      <TopMenu>
+        <NavBar />
+      </TopMenu>
+      <MainContent>
         <Left>
           <SideNav />
         </Left>
         <Right>
           <PaletteView />
         </Right>
-      </Main>
-    </>
+      </MainContent>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const TopMenu = styled.div`
+  background-color: #333;
+  color: white;
+  text-align: center;
+`;
+
 const Left = styled.div`
-  flex: 0 0 280px;
+  width: 300px;
+  background-color: #f7f7f7;
   border-right: 1px solid #e3e3e3;
-  background: #f7f7f7;
+  overflow-y: auto;
+  padding: 10px;
 `;
 
 const Right = styled.div`
   background: #f1f1f1;
-  flex-grow: 1;
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
 `;
 
-const Main = styled.div`
+const MainContent = styled.div`
   display: flex;
-  height: 100%;
+  flex: 1;
+  overflow: hidden;
 `;
