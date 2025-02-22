@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 import React from 'react';
 import { AlertTriangle, Anchor, Key, Lock } from 'feather-icons-react';
 import styled from 'styled-components';
