@@ -1,3 +1,4 @@
+/* eslint-disable curly */
 import styled from 'styled-components';
 import Scale from './Scale';
 
@@ -5,8 +6,8 @@ export default function ScaleGroupView({ model: scaleModel }) {
   if (!scaleModel) return null;
 
   return (
-    <Title>
-      Scale
+    <>
+      <Title>scale </Title>
       <Container>
         <Wrapper>
           <Main className="ScaleView">
@@ -16,13 +17,16 @@ export default function ScaleGroupView({ model: scaleModel }) {
           </Main>
         </Wrapper>
       </Container>
-    </Title>
+    </>
   );
 }
 
 const Title = styled.div`
-  font-weight: 500;
-  font-size: 14px;
+  flex: 0 0 100px;
+  padding-top: 18px;
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 8px;
 `;
 
 const Container = styled.div`
