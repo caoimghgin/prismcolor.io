@@ -1,27 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2111.29 1938.69">
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 250.15 288.81">
   <defs>
     <style>
       .cls-1 {
-        fill: url(#linear-gradient);
-        stroke: #fff;
-        stroke-miterlimit: 10;
+        mask: url(#mask);
       }
 
       .cls-2 {
-        fill: #fff;
+        fill: #3473f6;
+      }
+
+      .cls-3 {
+        fill: #d9d9d9;
+      }
+
+      .cls-4 {
+        fill: #021d55;
+      }
+
+      .cls-5 {
+        fill: #71a2fa;
+      }
+
+      .cls-6 {
+        fill: #032d82;
+      }
+
+      .cls-7 {
+        fill: #001322;
+      }
+
+      .cls-8 {
+        fill: #ccdffd;
+      }
+
+      .cls-9 {
+        fill: #0548d1;
+      }
+
+      .cls-10 {
+        fill: #053fb6;
+      }
+
+      .cls-11 {
+        fill: #86b0fb;
       }
     </style>
-    <linearGradient id="linear-gradient" x1="43.65" y1="-42.65" x2="2067.64" y2="1981.34" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#06d0f1"/>
-      <stop offset=".55" stop-color="#0554f1"/>
-      <stop offset="1" stop-color="#013ab7"/>
-    </linearGradient>
+    <mask id="mask" x="-123.52" y="-125.18" width="448.94" height="495.41" maskUnits="userSpaceOnUse">
+      <g id="mask0_8_410" data-name="mask0 8 410">
+        <path class="cls-3" d="M1.6,1.02l243.2,140.41L1.6,281.85V1.02Z"/>
+      </g>
+    </mask>
   </defs>
-  <g id="Layer_1-2" data-name="Layer 1">
-    <rect class="cls-1" x=".5" y=".5" width="2110.29" height="1937.69"/>
-    <polygon class="cls-2" points="1485.31 1402.37 1290.85 1402.37 1435.09 1652.2 1917.82 1652.2 1471.67 879.44 1183.4 879.44 1485.31 1402.37"/>
-    <polygon class="cls-2" points="749.46 1175.17 1051.8 651.5 1149.03 819.91 1293.16 570.26 1051.8 152.2 605.32 925.52 749.46 1175.17"/>
-    <polygon class="cls-2" points="715.08 1234.7 426.82 1234.7 185.77 1652.2 1078.72 1652.2 1222.96 1402.37 618.28 1402.37 715.08 1234.7"/>
+  <g class="cls-1">
+    <g>
+      <rect class="cls-8" x="-84.94" y="-108.17" width="92.95" height="92.95" transform="translate(25.7 -27.5) rotate(-30)"/>
+      <rect class="cls-11" x="-38.47" y="-27.68" width="92.95" height="92.95" transform="translate(-8.33 6.52) rotate(-30)"/>
+      <rect class="cls-5" x="42.03" y="-74.15" width="92.95" height="92.95" transform="translate(25.7 40.54) rotate(-30)"/>
+      <rect class="cls-10" x="-106.51" y="226.25" width="92.95" height="92.95" transform="translate(-144.41 6.52) rotate(-30)"/>
+      <rect class="cls-10" x="-26.01" y="179.78" width="92.95" height="92.95" transform="translate(-110.39 40.54) rotate(-30)"/>
+      <rect class="cls-11" x="-72.49" y="99.29" width="92.95" height="92.95" transform="translate(-76.37 6.52) rotate(-30)"/>
+      <rect class="cls-6" x="54.48" y="133.31" width="92.95" height="92.95" transform="translate(-76.37 74.56) rotate(-30)"/>
+      <rect class="cls-7" x="20.46" y="260.27" width="92.95" height="92.95" transform="translate(-144.41 74.56) rotate(-30)"/>
+      <rect class="cls-7" x="134.97" y="86.84" width="92.95" height="92.95" transform="translate(-42.35 108.58) rotate(-30)"/>
+      <rect class="cls-2" x="8.01" y="52.82" width="92.95" height="92.95" transform="translate(-42.35 40.54) rotate(-30)"/>
+      <rect class="cls-4" x="215.46" y="40.36" width="92.95" height="92.95" transform="translate(-8.32 142.6) rotate(-30)"/>
+      <rect x="100.95" y="213.8" width="92.95" height="92.95" transform="translate(-110.39 108.58) rotate(-30)"/>
+      <rect class="cls-9" x="88.5" y="6.34" width="92.95" height="92.95" transform="translate(-8.33 74.56) rotate(-30)"/>
+      <rect x="181.44" y="167.33" width="92.95" height="92.95" transform="translate(-76.37 142.6) rotate(-30)"/>
+      <rect class="cls-9" x="168.99" y="-40.13" width="92.95" height="92.95" transform="translate(25.7 108.58) rotate(-30)"/>
+    </g>
   </g>
 </svg>
