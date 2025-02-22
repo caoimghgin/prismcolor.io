@@ -5,9 +5,11 @@ import { Button } from '@mantine/core';
 import { optimizations } from '@/models/OptimizationModel';
 import { usePaletteStore } from '../../store/usePaletteStore';
 import NavBarMenu from './NavBarMenu';
+import { useRouter } from 'next/navigation';
 
 export default function NavBar() {
   const { model, delegate } = usePaletteStore();
+  const router = useRouter();
 
   function downloadAction({ model }: any) {
     const selection = { optimization: delegate.optimization, ...model };
@@ -19,7 +21,7 @@ export default function NavBar() {
 
   return (
     <Wrapper>
-      <Image src="images/logo.svg" width={130} height={34} alt="PrismColor Logo" />
+      <Image src="images/logo.svg" width={130} height={42} alt="PrismColor Logo" onClick={() => router.push('/')} />
       <ButtonGroup>
         <NavBarMenu />
         <Button

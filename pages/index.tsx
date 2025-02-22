@@ -19,7 +19,7 @@ function HeroSection() {
           <Title>Say hello to PrismColor</Title>
           <Subtitle>Your ultimate color palette creation tool for any design system</Subtitle>
           <Group justify="left" mt="xl">
-            <Button onClick={() => router.push('/create')}>Make Your Own</Button>
+            <Button onClick={() => router.push('/create')}>Create Your Palette</Button>
             <Button variant="default" onClick={() => router.push('/view')}>
               Learn More
             </Button>
