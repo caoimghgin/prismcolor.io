@@ -6,8 +6,8 @@ export default function ScaleGroupView({ model: scaleModel }) {
   if (!scaleModel) return null;
 
   return (
-    <>
-      <Title>scale </Title>
+    <div>
+      <Title>scale</Title>
       <Container>
         <Wrapper>
           <Main className="ScaleView">
@@ -17,7 +17,7 @@ export default function ScaleGroupView({ model: scaleModel }) {
           </Main>
         </Wrapper>
       </Container>
-    </>
+    </div>
   );
 }
 
