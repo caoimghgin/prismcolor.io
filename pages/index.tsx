@@ -17,7 +17,7 @@ function HeroSection() {
       <Container>
         <LeftSection>
           <Title>Say hello to PrismColor</Title>
-          <Subtitle>Your ultimate color palette creation tool for any design system</Subtitle>
+          <Subtitle>The universal color palette creation tool for any design system</Subtitle>
           <Group justify="left" mt="xl">
             <Button onClick={() => router.push('/create')}>Create Your Palette</Button>
             <Button variant="default" onClick={() => router.push('/view')}>
@@ -50,9 +50,19 @@ const Container = styled.div`
 `;
 
 const LeftSection = styled.div`
-  flex: 1;
+  flex: 0.5;
   padding: 20px;
   width: 400px;
+`;
+
+const RightSection = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 800px) {
+    display: none;
+  };
 `;
 
 const Title = styled.h1`
@@ -71,16 +81,11 @@ const Subtitle = styled.h2`
   line-height: 1.2;
   margin-block-start: 0em;
   margin-block-end: 18px;
-  width: 375px;
+  width: 350px;
   color: #666;
 `;
 
-const RightSection = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+
 
 const Image = styled.img`
   max-width: 100%;
