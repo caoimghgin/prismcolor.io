@@ -11,9 +11,10 @@ export default function Main() {
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
+  @media (min-width: 850px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   margin: 16px;
 `;
