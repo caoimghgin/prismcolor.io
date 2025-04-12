@@ -16,6 +16,7 @@ export default function ScaleView({ model: scaleModel }) {
 
   const onClickHandler = () => {
     navigator.clipboard.writeText(scaleModel.hex);
+    console.log(scaleModel);
   };
 
   return render(scaleModel, delegate, onClickHandler);
