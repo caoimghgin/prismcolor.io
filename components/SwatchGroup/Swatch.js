@@ -15,6 +15,7 @@ export default function SwatchView({ model: swatchModel }) {
 
   const onClickHandler = () => {
     navigator.clipboard.writeText(swatchModel.hex);
+    console.log(swatchModel);
   };
 
   return render(swatchModel, delegate, onClickHandler);
